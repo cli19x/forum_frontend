@@ -1,0 +1,60 @@
+
+<body>
+<mat-toolbar style="background: linear-gradient(white, transparent);">
+  <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_title_logo.png" class="title-img" alt="title">
+</mat-toolbar>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+  <mat-card>
+
+      <h2>Login Here</h2>
+
+    <mat-card-content>
+      <p>
+        <mat-form-field appearance="standard" style="width: 80%;" class="field">
+          <mat-label style="color: darkgray; text-align: center">Email Address</mat-label>
+          <input type="text" formControlName="username" [ngClass]="{'is-invalid': submitted && f.username.errors }"
+                 matInput>
+          <mat-hint *ngIf="submitted && f.username.errors">
+            <mat-hint *ngIf="f.username.errors.required" style="color: red">Email is required</mat-hint>
+          </mat-hint>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard" style="width: 80%">
+          <mat-label style="color: darkgray">Password</mat-label>
+          <input matInput type="password"  formControlName="password"
+                 placeholder="" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+          <mat-hint *ngIf="submitted && f.password.errors">
+            <mat-hint *ngIf="f.password.errors.required;" style="color: red">Password is required</mat-hint>
+          </mat-hint>
+
+        </mat-form-field>
+      </p>
+
+    </mat-card-content>
+    <br>
+    <mat-card-actions>
+      <button mat-raised-button class="btn_login">Login
+        <mat-spinner *ngIf="loading" [diameter]="20" color="accent"></mat-spinner>
+      </button>
+      <br><br>
+      <a class="signup"  routerLink="/register">Register</a>
+      <br><br>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<mat-toolbar class="b-toolbar">
+  <a   class="b-time"> @2019 Group Raiser
+  </a>  &nbsp;&nbsp;
+  <a mat-flat-button [disableRipple]="true"> Help </a> &nbsp;&nbsp;
+  <a mat-flat-button [disableRipple]="true" > Contact </a> &nbsp;&nbsp;
+  <a mat-flat-button [disableRipple]="true"> Privacy </a> &nbsp;&nbsp;
+  <a mat-flat-button [disableRipple]="true"> About Us </a> &nbsp;&nbsp;
+  <a class="b-title"> Group Raiser </a>
+</mat-toolbar>
+
+</body>
+
+

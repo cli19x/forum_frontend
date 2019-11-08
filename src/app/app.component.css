@@ -1,0 +1,65 @@
+body{
+  font-family: Tahoma, Geneva, sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  text-align: center;
+  background: url('../assets/img/keyboard.jpg');
+  background-size: cover;
+}
+button{
+  color: #fff;
+}
+
+
+.example-container {
+  background: transparent;
+}
+.list_item {
+  color: #242424;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+a {
+  color: white;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: bold;
+}
+
+
+.img-responsive {
+  height: auto;
+  width: auto;
+  max-height: 28px;
+  max-width: 28px;
+}
+
+.img-responsive2 {
+  height: auto;
+  width: auto;
+  max-height: 40px;
+  max-width: 120px;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.top-a {
+  color: #888888;
+  font-size: 12px;
+  background: none;
+}
+
+.top-a:hover {
+  color: white;
+  font-size: 12px;
+  background: none;
+}
+
+
+header {
+  font-size: 14px;
+  color: whitesmoke;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+

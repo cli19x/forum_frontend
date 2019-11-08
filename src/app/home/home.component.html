@@ -1,0 +1,116 @@
+
+
+<div>
+  <mat-toolbar class="t-toolbar">
+    <mat-toolbar-row>
+      <span class="menu-spacer"></span>
+      <div style="width: 100%;">
+        <ng-marquee duration="26">
+          <mark style=""> <a href="https://www.tiktok.com/en/" target="_blank" style="color:
+           white; text-decoration: none"> 亲爱的顾客朋友们，现在购买，只需要998，
+            顾客朋友们，走过路过不要错过。。。窝窝头，一块钱4个，嘿嘿！！ 谁他妈买小米啊 </a></mark>
+
+        </ng-marquee>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+
+
+
+<div class="div-1">
+  <div style="width: 21%; height: 100%; float: left">
+     <img id="img1" [src]="[currentUrl]" class="blur-img">
+  </div>
+  <div style="width: 58%; filter: blur(0px); float: left; height: 100%">
+    <slideshow #slideshow style="alignment: center" [height]="'100%'"
+               [minHeight]="'100%'"
+               (click)="gotoAdsLink($event)"
+               [autoPlay]="true"
+               [fullscreen]="false"
+               [showArrows]="true"
+               autoPlayInterval="4800"
+               [imageUrls]="imageSources"
+               [lazyLoad]="imageSources?.length > 1"
+               [autoPlayWaitForLazyLoad]="true"
+               [showDots]="false"
+               (onIndexChanged)="display($event)">
+    </slideshow>
+  </div>
+  <div style="width: 21%; height: 100%; float: left">
+     <img [src]="[currentUrl]" class="blur-img2" >
+  </div>
+</div>
+
+
+<body>
+
+  <div class="main_div2">
+    <div class="post-div">
+      <div class="list-container">
+          <app-index  *ngFor="let index of displayingIndexes" [index]="index">
+
+          </app-index>
+        <mat-card style="width: 97%; float: left; margin-top: 10px; margin-bottom: 10px">
+          <mat-paginator
+                         [length]="count"
+                         [pageSize]="currentItemPerPage"
+                         [pageSizeOptions]="numberOfPages"
+                         (page)="onPaginateChange($event)"
+                         [showFirstLastButtons]="true">
+          </mat-paginator>
+        </mat-card>
+
+      </div>
+    </div>
+
+    <mat-card class="main_div">
+
+      <div class="n_t_div">
+        <img src="https://angularcli.s3.amazonaws.com/asserts/img/pen.png" class="n_t_img">
+        <a class="new_topic">New Topic</a>
+      </div>
+      <form [formGroup]="postForm">
+        <label>
+          <input  class="input" type="text" formControlName="title"
+                  placeholder="Input title" required="true">
+        </label>
+        <span  class="sp"></span>
+        <label>
+          <textarea class="ta" type="text" formControlName="content" placeholder="Main Content"></textarea>
+        </label>
+      </form>
+      <div style="width: 60%; height: auto; float: left">
+        <div *ngIf="isInvalid" class="div-error">
+          <a class="error-a">{{errorMessage}}!</a>
+        </div>
+        <button mat-button  class = "btn_submit" (click)="onSubmit()">Submit</button>
+      </div>
+    </mat-card>
+    <div class="div-last">
+      <a class="bottom-a-1"> @2019 Group Raiser</a>&nbsp;
+      <a  mat-flat-button [disableRipple]="true" class="bottom-a"> Help </a> &nbsp;
+      <a mat-flat-button [disableRipple]="true" class="bottom-a"> Contact </a> &nbsp;
+      <a mat-flat-button [disableRipple]="true" class="bottom-a"> Privacy </a> &nbsp;
+      <a mat-flat-button [disableRipple]="true" class="bottom-a"> About Us </a> &nbsp;
+      <a class="bottom-a-1" > Group Raiser </a>
+    </div>
+  </div>
+
+
+  <div class="fab-container2">
+      <img #up [src]="imgSrc" alt="up" style="width: 50px; height: 50px" (click)="onActivateUp($event)"
+           [hidden]="moving"
+           (mouseover)="imgSrc = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_up_arrow.png'"
+           (mouseout)="imgSrc = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_up_hover.png'">
+
+  </div>
+
+  <div class="fab-container">
+    <img #down [src]="imgSrc2" alt="up" style="width: 50px; height: 50px" (click)="onActivateDown($event)"
+         [hidden]="moving"
+         (mouseover)="imgSrc2 = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_down_arrow.png'"
+         (mouseout)="imgSrc2 = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_down_hover.png'">
+  </div>
+</body>
+

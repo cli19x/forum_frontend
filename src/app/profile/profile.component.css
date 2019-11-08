@@ -1,0 +1,144 @@
+
+body{
+  font-family: Tahoma, Geneva, sans-serif;
+  color: transparent;
+  background: #F9F9F9;
+  min-height: auto;
+  background-size: cover;
+}
+.container {
+  width:70%;
+  min-height: 300px;
+  margin-left: 15%;
+  background: white;
+  border: 1px solid #DFDFDF;
+  overflow:hidden;
+}
+.header {
+  width:100%;
+  height:300px;
+  position:relative;
+  background:#fff;
+}
+.header:before {
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  background: #ff9800;
+  left:0;
+  top:-56px;
+  background-image:url('https://angularcli.s3.amazonaws.com/asserts/img/new_bg.jpg');
+  transform:skewY(-6deg);
+}
+
+.person {
+  width:250px;
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+.dp {
+  width:130px;
+  height:130px;
+  background-size:cover;
+  background: #fff center;
+  box-shadow:1px 2px 8px 2px rgba(0, 0, 0, 0.5);
+  border:3px solid #fff;
+  position:absolute;
+  bottom:45px;
+  right:80px;
+  border-radius:50%;
+}
+.name {
+  color:#25272b;
+  position:absolute;
+  bottom:5px;
+  right:100px;
+  font-weight:bolder;
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+  text-shadow:1px 1px 1px #eee;
+  font-size:25px;
+}
+
+.email {
+  color:#888888;
+  position:absolute;
+  right: 21.6%;
+  font-weight:bolder;
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+  text-shadow:1px 1px 1px #eee;
+  font-size:15px;
+}
+.info {
+  border-top:1px solid #eee;
+  padding:20px;
+  background-color: white;
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+}
+.title {
+  color:#25272b;
+  margin-top: 55px;
+  margin-bottom:15px;
+  position:relative;
+  padding-bottom:3px;
+}
+.title:after {
+  position:absolute;
+  content:'';
+  bottom:0;
+  left:0;
+  border-bottom:1.5px solid #333;
+  width:200px;
+}
+
+p {
+  font-size:18px;
+  color:#333;
+  text-align:justify;
+}
+
+.movies {
+  width:100%;
+  padding-top:20px;
+  margin-top:20px;
+  border-top:1px solid #eee;
+}
+
+.section {
+  list-style-type:none;
+}
+.section li {
+  width:70px;
+  margin:5px;
+  display:inline-block;
+}
+.section li span {
+  display:block;
+  font-size:13px;
+  text-transform:capitalize;
+  height:30px;
+  overflow:hidden;
+}
+
+.social {
+  width:100%;
+  padding-top:40px;
+  margin-top:20px;
+  border-top:1px solid #eee;
+  padding-bottom:20px;
+  border-bottom:1px solid #eee;
+}
+.social ul li{
+  list-style:none;
+  display:inline;
+  margin:10px;
+}
+.social ul li a img {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.social ul li a img:hover {
+  opacity:0.5;
+}

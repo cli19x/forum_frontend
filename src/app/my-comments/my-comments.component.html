@@ -1,0 +1,16 @@
+<mat-card>
+  <div class="div-1">
+    <a class="title">{{myComment.postTitle}}</a>
+    <div class="div-2">
+      <a class="nick_name">{{myComment.nickName}}: {{myComment.comment}}</a>
+    </div>
+    <div class="div-3">
+      <div class="div-4">
+        <a
+          class="reply">500</a>
+        <img class="reply-img"  src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply_i.png" matTooltip="reply number" alt=""/>
+        <a class="time" matTooltip="create time">{{myComment.time | date: 'MM/dd/yyyy, h:mm a'}} </a>
+      </div>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card>
+<div class="div-1">
+  <a class="title">{{index.postTitle}}</a>
+  <div class="div-2">
+    <img
+      class="nick_name_img"
+      src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply.png" alt=""/>
+    <a class="nick_name">{{index.nickName}}</a>
+  </div>
+  <a class="data">{{index.postData}}</a>
+  <div class="div-3">
+    <div class="div-4">
+      <a
+        class="reply">500</a>
+      <img class="reply-img"  src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply_i.png" matTooltip="reply number" alt=""/>
+      <a class="time" matTooltip="create time">{{index.createTime | date: 'MM/dd/yyyy, h:mm a' }} </a>
+    </div>
+
+
+  </div>
+</div>
+</mat-card>
