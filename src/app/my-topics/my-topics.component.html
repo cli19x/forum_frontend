@@ -1,0 +1,13 @@
+<div class="main-div">
+  <div class="div-1">
+    <a class="title">{{myTopic.postTitle}}</a>
+    <div class="div-2">
+      <a
+        class="reply">500</a>
+      <img class="reply-img"  src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply_i.png" matTooltip="reply number" alt=""/>
+      <a class="time" matTooltip="create time">{{myTopic.createTime | date: 'MM/dd/yyyy, h:mm a' }}</a>
+
+    </div>
+    <p class="data">{{myTopic.postData}}</p>
+  </div>
+</div>

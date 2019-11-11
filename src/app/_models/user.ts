@@ -2,6 +2,7 @@
 export class User {
     msg: string;
     errMsg: string;
-    sessionId: string;
+    token: string;
     nickName: string;
+    userId: number;
    }

@@ -1,11 +1,4 @@
-body{
-  font-family: Tahoma, Geneva, sans-serif;
-  color: #fff;
-  min-height: 100vh;
-  text-align: center;
-  background: url('../assets/img/keyboard.jpg');
-  background-size: cover;
-}
+
 button{
   color: #fff;
 }

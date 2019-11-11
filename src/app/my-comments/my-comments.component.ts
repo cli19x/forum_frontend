@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MyComment} from '../_models/myComment';
+import {Post} from '../_models/post';
 
 @Component({
   selector: 'app-my-comments',
@@ -7,7 +8,7 @@ import {MyComment} from '../_models/myComment';
   styleUrls: ['./my-comments.component.css']
 })
 export class MyCommentsComponent implements OnInit {
-  @Input() myComment: MyComment;
+  @Input() myComment: Post;
   constructor() { }
 
   ngOnInit() {

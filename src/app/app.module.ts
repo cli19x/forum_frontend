@@ -20,12 +20,19 @@ import { ChoosingPreferencesComponent } from './choosing-preferences/choosing-pr
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { TopicComponent } from './topic/topic.component';
 import {GalleryModule} from 'ng-gallery';
-import {config} from 'rxjs';
 import {NgImageSliderModule} from 'ng-image-slider';
 import {SlideshowModule} from 'ng-simple-slideshow';
 import { ProfileComponent } from './profile/profile.component';
 import {NgMarqueeModule} from 'ng-marquee';
 import { MyCommentsComponent } from './my-comments/my-comments.component';
+import { MyTopicsComponent } from './my-topics/my-topics.component';
+import { CommentComponent } from './comment/comment.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material';
+import { ProfileDialogComponent } from './profile-dialog/profile-dialog.component';
+import { DetailPageComponent } from './detail-page/detail-page.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {SidebarModule} from 'ng-sidebar';
 
 
 @NgModule({
@@ -40,7 +47,12 @@ import { MyCommentsComponent } from './my-comments/my-comments.component';
     TopicComponent,
     IndexComponent,
     ProfileComponent,
-    MyCommentsComponent
+    MyCommentsComponent,
+    MyTopicsComponent,
+    CommentComponent,
+    ProfileDialogComponent,
+    DetailPageComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,15 +62,18 @@ import { MyCommentsComponent } from './my-comments/my-comments.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     GalleryModule.forRoot(),
     NgImageSliderModule,
     SlideshowModule,
-    NgMarqueeModule
+    NgMarqueeModule,
+    MatDialogModule,
+    SidebarModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

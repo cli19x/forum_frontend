@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {NotificationService} from './_services/notification.service';
-import {AuthService} from './_services/auth.service';
+import {NotificationService} from './_services';
+import {AuthService} from './_services';
 import {Router} from '@angular/router';
 import {User} from './_models/user';
 

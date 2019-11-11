@@ -2,21 +2,14 @@ a {
   color: #494949;
 }
 
-mat-card {
+.main-div {
   width: 97%;
-  height: 150px;
+  height: 80px;
   border: 1px solid #DFDFDF;
   margin-top: 20px;
   background-color: white
 }
 
-mat-card:hover {
-  width: 97%;
-  height: 150px;
-  border: 1px solid #DFDFDF;
-  margin-top: 20px;
-  background-color: #F7F9FC;
-}
 
 .div-1 {
   float: left;
@@ -31,27 +24,91 @@ mat-card:hover {
   color: #2A7DFA;
   font-size: 20px;
   text-align: left;
-  width: 80%
+  margin-left: 6px;
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.title:hover {
+  float: left;
+  color: #2A7DFA;
+  text-decoration: underline;
+  font-size: 20px;
+  text-align: left;
+  margin-left: 6px;
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .div-2 {
-  width: auto;
+  width: 90%;
+  margin-top: 10px;
   float: left;
 }
 
-.nick_name_img {
-  width: 12px;
-  height: 12px;
-  float: left;
-  margin-right: 0;
-  margin-top: 3px
-}
+
 
 .nick_name {
-  font-size: 12px;
+  font-size: 14px;
   width: auto;
+  float: left;
   margin-left: 6px;
   color: #FAAC27;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nick_name2 {
+  font-size: 14px;
+  width: 1%;
+  float: left;
+  margin-left: 6px;
+  color: #FAAC27;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.nick_name:hover {
+  font-size: 14px;
+  width: auto;
+  float: left;
+  margin-left: 6px;
+  color: #FAAC27;
+  text-decoration: underline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nick_name2:hover {
+  font-size: 14px;
+  width: 1%;
+  float: left;
+  margin-left: 6px;
+  color: #FAAC27;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comment {
+  font-size: 14px;
+  width: 72%;
+  float: left;
+  margin-left: 6px;
+  color: #888888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .data {
@@ -66,8 +123,6 @@ mat-card:hover {
 .div-3 {
   width: 100%;
   float: left;
-  position: absolute;
-  bottom: 30px;
 }
 
 .div-4 {
@@ -75,20 +130,9 @@ mat-card:hover {
   float: right;
   padding-left: 1px;
   font-size: 14px;
-  margin-right: 40px
+  margin-right: 10px
 }
 
-.reply {
-  width: 10%;
-  padding-left: 1px;
-  font-size: 12px;
-}
-
-.reply-img {
-  width: 14px;
-  height: 14px;
-  margin-left: 3px;
-}
 
 .time {
   width: 10%;

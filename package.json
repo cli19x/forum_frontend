@@ -25,6 +25,7 @@
     "ng-gallery": "^1.0.1",
     "ng-image-slider": "^2.1.0",
     "ng-marquee": "^1.0.2",
+    "ng-sidebar": "^9.1.1",
     "ng-simple-slideshow": "^1.2.9",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.3",

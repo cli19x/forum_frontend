@@ -1,80 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../_models/user';
 import {AuthService, NotificationService, UserService} from '../_services';
-import {Router} from '@angular/router';
 import {Index} from '../_models';
 import {PostService} from '../_services/post.service';
-import {MyComment} from '../_models/myComment';
+import {first} from 'rxjs/operators';
+import {Profile} from '../_models/Profile';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Post} from '../_models/post';
 
 @Component({
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('statusBox', {static: true}) status: any;
   currentUser: User;
+  profileInfo: Profile;
   indexes: Index[] = [];
   displayingPostIndexes: Index[] = [];
   countPost = 0;
   currentPostItemPerPage = 20;
   currentPostPageIndex = 0;
+  loading = false;
+  submitted = false;
+  isEditing = false;
+  statusForm: FormGroup;
 
-
-  comments: MyComment[] = [];
-  displayingCommentIndexes: Index[] = [];
+  comments: Post[] = [];
+  displayingCommentIndexes: Post[] = [];
   countComment = 0;
   currentCommentItemPerPage = 20;
   currentCommentPageIndex = 0;
 
   numberOfPages: number[] = [10, 20, 30, 50];
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private postService: PostService,
     private notifService: NotificationService,
-    private router: Router
-  ) { }
+    private formBuilder: FormBuilder
+  ) {
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
   ngOnInit() {
+    this.updateProfile();
     this.getMyPosts();
     this.getMyComments();
+    this.statusForm = this.formBuilder.group({
+      statusStatement: [this.profileInfo.pSignature]
+    });
   }
 
   getMyPosts() {
-    this.postService.getIndexes().subscribe(
+    this.postService.getMyPosts(this.currentUser.userId).subscribe(
       indexes => {
         console.log(indexes);
-        const {errMsg, msg, objects} = indexes;
+        const {errMsg, msg, userPosts} = indexes;
         if (errMsg) {
           this.notifService.showNotif(`Load my posts error: ${errMsg}`, 'error');
         } else if (msg) {
           console.log(msg);
-          console.log(objects);
-          this.indexes = objects;
+          console.log(userPosts);
+          this.indexes = userPosts;
           console.log(this.indexes);
           this.countPost = this.indexes.length;
           this.onPostDefaultDisplaying();
+          this.onCommentDefaultDisplaying();
         }
       },
-      error => {this.notifService.showNotif(`Load my posts error: ${error}`, 'error'); });
+      error => {
+        this.notifService.showNotif(`Load my posts error: ${error}`, 'error');
+      });
   }
 
   getMyComments() {
-    // this.postService.getIndexes().subscribe(
-    //   comments => {
-    //     const {errMsg, msg, objects} = comments;
-    //     if (errMsg) {
-    //       this.notifService.showNotif(`Load my posts error: ${errMsg}`, 'error');
-    //     } else if (msg) {
-    //       this.comments = objects;
-    //       this.count = this.comments.length;
-    //       this.onDefaultDisplaying();
-    //     }
-    //   },
-    //   error => {this.notifService.showNotif(`Load my posts error: ${error}`, 'error'); });
-    this.comments[0] = {postTitle: 'test1', comment: 'ha ha ha ha ha1', nickName: this.currentUser.nickName, time: new Date()};
-    this.comments[1] = {postTitle: 'test2', comment: 'ha ha ha ha ha2', nickName: this.currentUser.nickName, time: new Date()};
-    this.comments[2] = {postTitle: 'test3', comment: 'ha ha ha ha ha3', nickName: this.currentUser.nickName, time: new Date()};
-    this.comments[3] = {postTitle: 'test4', comment: 'ha ha ha ha ha4', nickName: this.currentUser.nickName, time: new Date()};
+    this.postService.getMyComments(this.currentUser.userId).subscribe(
+      comments => {
+        const {errMsg, msg, userPosts} = comments;
+        if (errMsg) {
+          this.notifService.showNotif(`Load my posts error: ${errMsg}`, 'error');
+        } else if (msg) {
+          this.comments = userPosts;
+          this.countComment = this.comments.length;
+          this.onCommentDefaultDisplaying();
+        }
+      },
+      error => {this.notifService.showNotif(`Load my posts error: ${error}`, 'error'); });
   }
 
   onPostPaginateChanging($event) {
@@ -102,18 +115,97 @@ export class ProfileComponent implements OnInit {
     this.currentCommentPageIndex = $event.pageIndex;
     const startIndex = this.currentCommentPageIndex * this.currentCommentItemPerPage;
     const endIndex = (this.currentCommentItemPerPage) * this.currentCommentPageIndex + this.currentCommentItemPerPage;
-    if (endIndex <= this.indexes.length) {
-      this.displayingCommentIndexes = this.indexes.slice(startIndex, endIndex);
+    if (endIndex <= this.comments.length) {
+      this.displayingCommentIndexes = this.comments.slice(startIndex, endIndex);
     } else {
-      this.displayingCommentIndexes = this.indexes.slice(startIndex);
+      this.displayingCommentIndexes = this.comments.slice(startIndex);
     }
   }
 
   onCommentDefaultDisplaying() {
-    if (this.currentCommentItemPerPage <= this.indexes.length) {
-      this.displayingCommentIndexes = this.indexes.slice(0, this.currentCommentItemPerPage);
+    if (this.currentCommentItemPerPage <= this.comments.length) {
+      this.displayingCommentIndexes = this.comments.slice(0, this.currentCommentItemPerPage);
     } else {
-      this.displayingCommentIndexes = this.indexes.slice(0);
+      this.displayingCommentIndexes = this.comments.slice(0);
     }
+  }
+
+
+  updateStatus(data1: string) {
+    this.submitted = true;
+    this.loading = true;
+    const update: Post = {
+      token: this.currentUser.token,
+      postTitle: undefined,
+      id: undefined,
+      postData: data1,
+      createTime: undefined,
+      postId: undefined,
+      nickName: undefined,
+      motherPostId: undefined,
+      level: undefined,
+      userId: undefined
+    };
+    this.userService.updateStatus(update)
+      .pipe(first())
+      .subscribe(status => {
+          console.log('response', status);
+          const {msg, errMsg} = status;
+          if (errMsg) {
+            console.log('Update Status failed');
+            this.notifService.showNotif(`Update Status error: ${errMsg}`, 'confirm');
+            this.loading = false;
+          } else if (msg) {
+            console.log(msg);
+            this.loading = false;
+            this.submitted = false;
+
+          }
+        },
+        error => {
+          this.notifService.showNotif(`Update Status error: ${error}`, 'confirm');
+          this.loading = false;
+          this.submitted = false;
+        }
+      );
+  }
+
+  updateProfile() {
+    this.loading = true;
+    this.userService.updateProfile(this.currentUser)
+      .pipe(first())
+      .subscribe(profile => {
+          console.log('response', profile);
+          const {msg, errMsg, userInfo} = profile;
+          if (errMsg) {
+            console.log('Update Status failed');
+            this.notifService.showNotif(`Update Profile error: ${errMsg}`, 'confirm');
+            this.loading = false;
+          } else if (msg) {
+            console.log(msg);
+            this.loading = false;
+            this.profileInfo = userInfo;
+            console.log(this.profileInfo);
+            this.submitted = false;
+
+          }
+        },
+        error => {
+          this.notifService.showNotif(`Update Profile error: ${error}`, 'confirm');
+          this.loading = false;
+          this.submitted = false;
+        }
+      );
+  }
+
+  onEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+
+  onSave(statusS: string) {
+    this.updateStatus(statusS);
+    this.isEditing = !this.isEditing;
+    console.log(`${statusS} save`);
   }
 }

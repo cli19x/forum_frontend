@@ -4,4 +4,6 @@ export class Index {
   postData: string;
   postTitle: string;
   createTime: Date;
+  id: number;
+  userId: number;
 }

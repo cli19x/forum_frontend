@@ -27,7 +27,7 @@ export class AuthService {
     let params = new HttpParams();
     params = params.append('email', username);
     params = params.append('passwd', password);
-    return this.http.get<any>(`http://end.greatbestus.com/login`, {params});
+    return this.http.get<any>(`http://end.greatbestus.com:8080/login`, {params});
   }
 
 

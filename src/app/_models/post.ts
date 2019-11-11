@@ -2,9 +2,14 @@
 import {User} from './user';
 
 export class Post {
-  title: string;
-  data: string;
+  postTitle: string;
+  postData: string;
   token: string;
-  date?: Date;
-  teamTime?: Date;
+  nickName: string;
+  createTime: Date;
+  postId: number;
+  id: number;
+  motherPostId: number;
+  level: number;
+  userId: number;
 }

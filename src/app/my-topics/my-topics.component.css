@@ -2,22 +2,11 @@ a{
   color: #494949;
 }
 
-mat-card {
-  width: 97%;
-  min-width: 500px;
-  height: 120px;
+.main-div {
+  width: 99.7%;
+  height: 100px;
   border: 1px solid #DFDFDF;
-  background-color: white;
-  margin-top: 20px;
-}
-
-mat-card:hover {
-  width: 97%;
-  min-width: 500px;
-  height: 120px;
-  border: 1px solid #DFDFDF;
-  background-color: #F7F9FC;
-  margin-top: 20px;
+  background-color: white
 }
 
 
@@ -25,11 +14,12 @@ mat-card:hover {
   float: left;
   width: 100%;
   height: 100%;
-  padding: 10px;
   position: relative;
 }
 
 .title {
+  margin-left: 15px;
+  margin-top: 15px;
   float: left;
   color: #2A7DFA;
   font-size: 20px;
@@ -37,35 +27,32 @@ mat-card:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 80%
+  width: 60%
+}
+
+.title:hover {
+  margin-left: 15px;
+  margin-top: 15px;
+  float: left;
+  color: #2A7DFA;
+  font-size: 20px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  width: 60%
 }
 
 .div-2 {
-  min-width: 15%;
-  text-align: right;
+  width: 28%;
+  margin-left: 12px;
   float: left;
 }
 
-.nick_name_img {
-  width: 12px;
-  height: 12px;
-  margin-right: 6px;
-  margin-top: 6px
-}
-
-.nick_name {
-  font-size: 12px;
-  margin-top: 3px;
-  width: 85px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #FAAC27;
-}
 
 .data {
   float: left;
-  margin-top: 15px;
   color: #494949;
   width: 90%;
   height: 44%;
@@ -74,38 +61,44 @@ mat-card:hover {
   overflow: hidden;
   text-align: left;
   font-size: 18px;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 
 .div-3 {
-  width: 95%;
-  text-align: right;
+  width: 100%;
   float: left;
   position: absolute;
   bottom: 20px;
 }
 
-.reply {
-  width: auto;
+.div-4 {
+  width: 45%;
+  float: right;
   padding-left: 1px;
-  text-align: right;
+  font-size: 14px;
+  margin-right: 40px
+}
+
+.reply {
+  width: 10%;
+  padding-left: 1px;
+  margin-left: 15px;
+  margin-top: 15px;
   font-size: 12px;
 }
 
 .reply-img {
-  width: auto;
-  margin-top: 6px;
+  width: 14px;
+  margin-top: 15px;
   height: 14px;
-  text-align: right;
   margin-left: 3px;
 }
 
 .time {
-  width: auto;
+  width: 10%;
   padding-left: 1px;
   font-size: 12px;
-  text-align: right;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 15px;
 }
-
-

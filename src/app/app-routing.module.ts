@@ -8,7 +8,7 @@ import {ForgetPasswordComponent} from './forget-password/forget-password.compone
 import {ProfileComponent} from './profile/profile.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {TopicComponent} from './topic/topic.component';
+import {DetailPageComponent} from './detail-page/detail-page.component';
 
 
 // , canActivate: [AuthGuard]
@@ -17,8 +17,8 @@ const routes: Routes = [{path: '', component: HomeComponent, canActivate: [AuthG
   {path: 'reset_password', component: ResetPasswordComponent, canActivate: [AuthGuard]},
   {path: 'forget_password', component: ForgetPasswordComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'topic', component: TopicComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: '' }];
+  {path: 'topic', component: DetailPageComponent, canActivate: [AuthGuard]},
+  {path: '**', redirectTo: ''}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

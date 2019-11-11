@@ -1,33 +1,45 @@
-
 <body>
 <div class='container'>
   <div class='header'>
     <div class='person'>
-      <img class='dp' src="https://angularcli.s3.amazonaws.com/asserts/img/pen.png">
+      <img class='dp' src="https://angularcli.s3.amazonaws.com/asserts/img/pen.png" alt="">
     </div>
-    <div class='name'>Tiger_ace (Real name)</div>
+    <div class='name'>{{profileInfo.firstName}} {{profileInfo.lastName}}</div>
   </div>
   <div class='info'>
-    <div class="email">chengenli117@gmail.com</div>
-    <h2 class="title">Personal Status</h2>
-    <p>And missing you is like fighting a war。</p>
+    <div class="email">{{profileInfo.eMail}} </div>
+    <br><br>
+    <div class="createTime">create Time: {{profileInfo.createTime | date: 'MM/dd/yyyy, h:mm a'}}</div>
+    <h2 class="title">Personal Status <img *ngIf="!isEditing"
+                                           src="https://angularcli.s3.amazonaws.com/asserts/img/ic_edit.png"
+                                           (click)="onEdit()"
+                                           alt="" style="width: 16px; height: 16px; margin-left: 4px;"
+                                           matTooltip="Edit">
+
+      <img *ngIf="isEditing" src="https://angularcli.s3.amazonaws.com/asserts/img/ic_save.png"
+
+           alt="" style="width: 16px; height: 16px; margin-left: 4px;"
+           matTooltip="Save">
+    </h2>
+    <div>
+      <p *ngIf="!isEditing">{{profileInfo.pSignature}}</p>
+
+    </div>
     <mat-tab-group style="margin-top: 50px">
       <mat-tab label="Posted By me">
         <div class="main_div2">
           <div class="post-div">
             <div class="list-container">
-              <app-index  *ngFor="let index of displayingPostIndexes" [index]="index">
+              <my-topic-app *ngFor="let item of displayingPostIndexes" [myTopic]="item">
 
-              </app-index>
-              <mat-card style="width: 97%; float: left; margin-top: 10px; margin-bottom: 10px">
-                <mat-paginator
-                  [length]="countPost"
-                  [pageSize]="currentPostItemPerPage"
-                  [pageSizeOptions]="numberOfPages"
-                  (page)="onPostPaginateChanging($event)"
-                  [showFirstLastButtons]="true">
-                </mat-paginator>
-              </mat-card>
+              </my-topic-app>
+              <mat-paginator style="width: 100%;"
+                             [length]="countPost"
+                             [pageSize]="currentPostItemPerPage"
+                             [pageSizeOptions]="numberOfPages"
+                             (page)="onPostPaginateChanging($event)"
+                             [showFirstLastButtons]="true">
+              </mat-paginator>
 
             </div>
           </div>
@@ -36,21 +48,20 @@
       <mat-tab label="Commended By me">
         <div class="main_div2">
           <div class="post-div">
-<!--            <div class="list-container">-->
-<!--              <app-my-comments  *ngFor="let comment of displayingCommentIndexes" [comment]="comment">-->
+            <div class="list-container">
+              <app-my-comments *ngFor="let comment of displayingCommentIndexes" [myComment]="comment">
 
-<!--              </app-my-comments>-->
-<!--              <mat-card style="width: 97%; float: left; margin-top: 10px; margin-bottom: 10px">-->
-<!--                <mat-paginator-->
-<!--                  [length]="countComment"-->
-<!--                  [pageSize]="currentCommentItemPerPage"-->
-<!--                  [pageSizeOptions]="numberOfPages"-->
-<!--                  (page)="onCommentPaginateChanging($event)"-->
-<!--                  [showFirstLastButtons]="true">-->
-<!--                </mat-paginator>-->
-<!--              </mat-card>-->
-
-<!--            </div>-->
+              </app-my-comments>
+              <mat-card style="width: 95%; float: left; margin-top: 10px; margin-bottom: 10px">
+                <mat-paginator
+                  [length]="countComment"
+                  [pageSize]="currentCommentItemPerPage"
+                  [pageSizeOptions]="numberOfPages"
+                  (page)="onCommentPaginateChanging($event)"
+                  [showFirstLastButtons]="true">
+                </mat-paginator>
+              </mat-card>
+            </div>
           </div>
         </div>
       </mat-tab>

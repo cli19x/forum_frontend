@@ -10,9 +10,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Index} from '../_models';
 
-@Component({ templateUrl: 'home.component.html' ,
+@Component({
+  templateUrl: 'home.component.html',
 
-  styleUrls: ['home.component.css']})
+  styleUrls: ['home.component.css']
+})
 export class HomeComponent implements OnInit {
   @ViewChild('slideshow', {static: true}) slideshow: any;
   postForm: FormGroup;
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
   currentUrl: string;
   submitted = false;
   loading = false;
+
   constructor(
     private postService: PostService,
     private userService: UserService,
@@ -76,10 +79,14 @@ export class HomeComponent implements OnInit {
           this.onDefaultDisplaying();
         }
       },
-      error => {this.notifService.showNotif(`Load topics error: ${error}`, 'error'); });
+      error => {
+        this.notifService.showNotif(`Load topics error: ${error}`, 'error');
+      });
   }
 
-  get f() { return this.postForm.controls; }
+  get f() {
+    return this.postForm.controls;
+  }
 
   onSubmit() {
     this.isInvalid = false;
@@ -93,8 +100,7 @@ export class HomeComponent implements OnInit {
         this.errorMessage = 'Invalid input in title';
         this.isInvalid = true;
         return;
-      } else
-      if (!this.f.content.value.replace(/\s/g, '').length) {
+      } else if (!this.f.content.value.replace(/\s/g, '').length) {
         this.errorMessage = 'Invalid input in Main Content';
         this.isInvalid = true;
         return;
@@ -103,11 +109,16 @@ export class HomeComponent implements OnInit {
 
     this.loading = true;
     const post: Post = {
-      token: this.currentUser.sessionId,
-      title: this.f.title.value,
-      data: this.f.content.value,
-      date: undefined,
-      teamTime: undefined
+      token: this.currentUser.token,
+      postTitle: this.f.title.value,
+      postData: this.f.content.value,
+      createTime: undefined,
+      postId: -1,
+      id: undefined,
+      level: undefined,
+      nickName: undefined,
+      motherPostId: undefined,
+      userId: undefined
     };
     this.count++;
     console.log(post);
@@ -136,7 +147,7 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  onActivateUp(event) {
+  onActivateUp() {
     this.moving = true;
     const scrollToTop = window.setInterval(() => {
       const pos = window.pageYOffset;
@@ -149,7 +160,7 @@ export class HomeComponent implements OnInit {
     }, 16);
   }
 
-  onActivateDown(event) {
+  onActivateDown() {
     window.scrollTo(0, document.documentElement.scrollHeight);
   }
 
@@ -212,7 +223,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  charCountTitle() {
+    return this.f.title.value.toString().length;
+  }
 
-
+  onShowDetail(data: Index) {
+    this.router.navigate(['/topic', {motherId: data.id, postTitle: data.postTitle}]).then(res => {
+      console.log(data.id);
+    });
+  }
 }
 

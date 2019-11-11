@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error = '';
   public currentUser: Observable<User>;
-  private currentUserSubject: BehaviorSubject<User>;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -46,7 +45,6 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.notification.showNotif('Submit clicked', 'confirm');
     this.submitted = true;
 
     // stop here if form is invalid
