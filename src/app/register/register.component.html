@@ -1,107 +1,174 @@
 <body>
+  <mat-toolbar style="background:  linear-gradient(white, transparent);">
+    <img
+      src="https://angularcli.s3.amazonaws.com/asserts/img/ic_title_logo.png"
+      class="title-img"
+      alt="title"
+    />
+  </mat-toolbar>
 
-<mat-toolbar style="background:  linear-gradient(white, transparent);">
-  <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_title_logo.png" class="title-img" alt="title">
-</mat-toolbar>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    style="height: auto; width: auto; background: transparent"
+  >
+    <mat-card class="registration-card">
+      <h2>Quick Registration</h2>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="height: auto; width: auto; background: transparent">
-  <mat-card class="registration-card">
-
-    <h2>Quick Registration</h2>
-
-    <mat-card-content>
-
-
-      <div class="form-group">
-        <mat-form-field style="width: 80%;">
-          <mat-label style="color: darkgray; text-align: center">First Name</mat-label>
-          <input matInput type="text" formControlName="firstName" class="form-control"
-                 style="caret-color: lightgray"
-                 [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-          <mat-hint *ngIf="submitted && f.firstName.errors">
-            <mat-hint *ngIf="f.firstName.errors.required" style="color: red">First Name is required</mat-hint>
-            <mat-hint *ngIf="f.firstName.errors.pattern" style="color: red">First Name is using illegal characters.</mat-hint>
-          </mat-hint>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field style="width: 80%;">
-          <mat-label style="color: darkgray; text-align: center">Last Name</mat-label>
-          <input matInput type="text" formControlName="lastName"
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
-          <mat-hint *ngIf="submitted && f.lastName.errors">
-            <mat-hint *ngIf="f.lastName.errors.required" style="color: red">Last Name is required</mat-hint>
-            <mat-hint *ngIf="f.lastName.errors.pattern" style="color: red">Last Name is using illegal characters.</mat-hint>
-          </mat-hint>
-        </mat-form-field>
-      </div>
-
-
-      <div class="form-group">
-        <mat-form-field style="width: 80%;">
-          <mat-label style="color: darkgray; text-align: center">Email Address</mat-label>
-          <input matInput type="email" formControlName="eMail" class="form-control"
-                 [ngClass]="{ 'is-invalid': submitted && f.eMail.errors }">
-          <mat-hint *ngIf="submitted && f.eMail.errors">
-            <mat-hint *ngIf="f.eMail.errors.required" style="color: red">Email Address is required</mat-hint>
-            <mat-hint *ngIf="f.eMail.errors.pattern" style="color: red">Email Address is typed with errors.</mat-hint>
-          </mat-hint>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-
-        <mat-form-field style="width: 80%;" color="primary">
-          <mat-label style="color: darkgray; text-align: center">Nick Name</mat-label>
-          <input matInput type="text" formControlName="nickName" style="text-underline-color: aliceblue"
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nickName.errors }">
-          <mat-hint *ngIf="submitted && f.nickName.errors">
-            <mat-hint *ngIf="f.nickName.errors.required" style="color: red">Nick Name is required</mat-hint>
-          </mat-hint>
-        </mat-form-field>
-
-      </div>
-
-      <div class="form-group">
-          <mat-form-field style="width: 80%; text-underline-color: darkgray; caret-color: darkgray">
-            <mat-label style="color: darkgray; text-align: center">Enter Password</mat-label>
-            <input matInput type="password" formControlName="passwd" class="form-control" style="width: 94%"
-                   [ngClass]="{ 'is-invalid': submitted && f.passwd.errors }">
-
-            <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_info.png" style="width: 4%; height: auto; box-shadow: #888888;
-                    margin-top: 20px; margin-left: 3px"  matTooltip="Contains at least one Uppercase Letter,
-                     Lowercase Letter, Number, and Special Character (!@#$%^&*)"
-                 matTooltipPosition="right" matTooltipClass="toolTip" matTooltipHideDelay="2000">
-            <mat-hint *ngIf="submitted && f.passwd.errors">
-              <mat-hint *ngIf="f.passwd.errors.required" style="color: red">Password is required</mat-hint>
-              <mat-hint *ngIf="f.passwd.errors.pattern" style="color: red">Password format is not correct.</mat-hint>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field style="width: 80%;">
+            <mat-label style="color: darkgray; text-align: center"
+              >First Name</mat-label
+            >
+            <input
+              matInput
+              type="text"
+              formControlName="firstName"
+              class="form-control"
+              style="caret-color: lightgray"
+              [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+            />
+            <mat-hint *ngIf="submitted && f.firstName.errors">
+              <mat-hint *ngIf="f.firstName.errors.required" style="color: red"
+                >First Name is required</mat-hint
+              >
+              <mat-hint *ngIf="f.firstName.errors.pattern" style="color: red"
+                >First Name is using illegal characters.</mat-hint
+              >
             </mat-hint>
           </mat-form-field>
-      </div>
+        </div>
 
-    </mat-card-content>
-    <br>
-    <mat-card-actions>
-      <button mat-raised-button class="btn_up">Register
-        <mat-spinner *ngIf="loading" [diameter]="20" color="accent"></mat-spinner>
-      </button>
-      <br><br><br>
-       <button mat-button routerLink="/login" class="btn_up_two">Cancel</button>
+        <div class="form-group">
+          <mat-form-field style="width: 80%;">
+            <mat-label style="color: darkgray; text-align: center"
+              >Last Name</mat-label
+            >
+            <input
+              matInput
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+            />
+            <mat-hint *ngIf="submitted && f.lastName.errors">
+              <mat-hint *ngIf="f.lastName.errors.required" style="color: red"
+                >Last Name is required</mat-hint
+              >
+              <mat-hint *ngIf="f.lastName.errors.pattern" style="color: red"
+                >Last Name is using illegal characters.</mat-hint
+              >
+            </mat-hint>
+          </mat-form-field>
+        </div>
 
-    </mat-card-actions>
-    <br>
-  </mat-card>
+        <div class="form-group">
+          <mat-form-field style="width: 80%;">
+            <mat-label style="color: darkgray; text-align: center"
+              >Email Address</mat-label
+            >
+            <input
+              matInput
+              type="email"
+              formControlName="eMail"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.eMail.errors }"
+            />
+            <mat-hint *ngIf="submitted && f.eMail.errors">
+              <mat-hint *ngIf="f.eMail.errors.required" style="color: red"
+                >Email Address is required</mat-hint
+              >
+              <mat-hint *ngIf="f.eMail.errors.pattern" style="color: red"
+                >Email Address is typed with errors.</mat-hint
+              >
+            </mat-hint>
+          </mat-form-field>
+        </div>
 
-</form>
+        <div class="form-group">
+          <mat-form-field style="width: 80%;" color="primary">
+            <mat-label style="color: darkgray; text-align: center"
+              >Nick Name</mat-label
+            >
+            <input
+              matInput
+              type="text"
+              formControlName="nickName"
+              style="text-underline-color: aliceblue"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.nickName.errors }"
+            />
+            <mat-hint *ngIf="submitted && f.nickName.errors">
+              <mat-hint *ngIf="f.nickName.errors.required" style="color: red"
+                >Nick Name is required</mat-hint
+              >
+            </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field
+            style="width: 80%; text-underline-color: darkgray; caret-color: darkgray"
+          >
+            <mat-label style="color: darkgray; text-align: center"
+              >Enter Password</mat-label
+            >
+            <input
+              matInput
+              type="password"
+              formControlName="passwd"
+              class="form-control"
+              style="width: 94%"
+              [ngClass]="{ 'is-invalid': submitted && f.passwd.errors }"
+            />
+
+            <img
+              src="https://angularcli.s3.amazonaws.com/asserts/img/ic_info.png"
+              style="width: 4%; height: auto; box-shadow: #888888;
+                    margin-top: 20px; margin-left: 3px"
+              matTooltip="Contains at least one Uppercase Letter,
+                     Lowercase Letter, Number, and Special Character (!@#$%^&*)"
+              matTooltipPosition="right"
+              matTooltipClass="toolTip"
+              matTooltipHideDelay="2000"
+            />
+            <mat-hint *ngIf="submitted && f.passwd.errors">
+              <mat-hint *ngIf="f.passwd.errors.required" style="color: red"
+                >Password is required</mat-hint
+              >
+              <mat-hint *ngIf="f.passwd.errors.pattern" style="color: red"
+                >Password format is not correct.</mat-hint
+              >
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <br />
+      <mat-card-actions>
+        <button mat-raised-button class="btn_up">
+          Register
+          <mat-spinner
+            *ngIf="loading"
+            [diameter]="20"
+            color="accent"
+          ></mat-spinner>
+        </button>
+        <br /><br /><br />
+        <!-- <button mat-button routerLink="/login" class="btn_up_two">Cancel</button> -->
+        <a class="login" routerLink="/login">Cancel</a>
+        <br /><br />
+      </mat-card-actions>
+      <!-- <br /> -->
+    </mat-card>
+  </form>
 </body>
 
 <mat-toolbar class="b-toolbar">
-  <a class="b-time"> @2019 Group Raiser
-  </a>  &nbsp;&nbsp;
+  <a class="b-time"> @2019 Group Raiser </a> &nbsp;&nbsp;
   <a mat-flat-button [disableRipple]="true"> Help </a> &nbsp;&nbsp;
-  <a mat-flat-button [disableRipple]="true" > Contact </a> &nbsp;&nbsp;
+  <a mat-flat-button [disableRipple]="true"> Contact </a> &nbsp;&nbsp;
   <a mat-flat-button [disableRipple]="true"> Privacy </a> &nbsp;&nbsp;
   <a mat-flat-button [disableRipple]="true"> About Us </a> &nbsp;&nbsp;
-  <a  class="b-title"> Group Raiser </a>
+  <a class="b-title"> Group Raiser </a>
 </mat-toolbar>

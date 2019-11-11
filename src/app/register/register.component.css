@@ -1,4 +1,4 @@
-body{
+body {
   font-family: Tahoma, Geneva, sans-serif;
   color: #fff;
   margin: 0;
@@ -8,28 +8,26 @@ body{
   background-size: cover;
 }
 
-
-
-.registration-card
-{
+.registration-card {
   background: white;
   width: 400px;
   height: auto;
+  -webkit-box-shadow: 21px 0px 37px -10px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 21px 0px 37px -10px rgba(0, 0, 0, 1);
+  box-shadow: 21px 0px 37px -10px rgba(0, 0, 0, 1);
   text-align: center;
   display: inline-block;
   margin: 2% auto auto auto;
 }
-input[type="text"]
-{
+input[type='text'] {
   color: #494949;
 }
 
-input[type="password"]
-{
+input[type='password'] {
   color: #494949;
 }
 
-input[type="email"] {
+input[type='email'] {
   color: #494949;
 }
 .login-card {
@@ -37,17 +35,14 @@ input[type="email"] {
   height: 400px;
   width: 400px;
   display: inline-block;
-
 }
-.title
-{
+.title {
   width: 100%;
   font-size: 22px;
   color: #494949;
   text-align: center;
 }
-.btn_up
-{
+.btn_up {
   border: none;
   width: 190px;
   background: skyblue;
@@ -59,18 +54,15 @@ input[type="email"] {
   cursor: pointer;
 }
 
-.btn_up:hover
-{
+.btn_up:hover {
   color: #ffffff;
   background-color: #039be5;
 }
 
-
-.btn_up_two
-{
+.btn_up_two {
   width: 190px;
   font-size: 16px;
-  background:#DFDFDF;
+  background: #dfdfdf;
   line-height: 25px;
   padding: 10px 0;
   color: white;
@@ -78,48 +70,40 @@ input[type="email"] {
   cursor: pointer;
 }
 
-.btn_up_two:hover
-{
-  color: #DFDFDF;
+.btn_up_two:hover {
+  color: #dfdfdf;
   background-color: #888888;
 }
 
-
-h2
-{
+h2 {
   color: #494949;
 }
-.password
-{
+.password {
   background: transparent;
   border: none;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
   color: skyblue;
 }
-.password:hover
-{
+.password:hover {
   color: white;
 }
-.signup
-{
+.signup {
   background: transparent;
   border: none;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 16px;
   color: skyblue;
 }
-.signup:hover
-{
+.signup:hover {
   color: white;
 }
-.container
-{
+.container {
   display: flex;
   flex-direction: row;
-  width: 100%
+  width: 100%;
 }
-::placeholder{
+::placeholder {
   color: aliceblue;
   opacity: 0.8;
 }
@@ -133,21 +117,21 @@ a {
   color: skyblue;
   font-size: 12px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .b-time {
   color: white;
   font-size: 12px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .b-title {
   color: white;
   font-size: 14px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .title-img {
@@ -161,7 +145,7 @@ mat-card {
   text-align: center;
   background: rgba(44, 62, 80, 0.7);
   border-color: white;
-  height:auto
+  height: auto;
 }
 
 .b-toolbar {
@@ -173,45 +157,58 @@ mat-card {
   background: linear-gradient(transparent, gray);
 }
 
-
 .b-time {
   color: white;
   font-size: 11px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 .b-time:hover {
   color: white;
   font-size: 11px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .b-title {
   color: white;
   font-size: 12px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 .b-title:hover {
   color: white;
   font-size: 12px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
 a {
   color: skyblue;
   font-size: 10px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 a:hover {
   color: white;
   font-size: 10px;
   font-family: Tahoma, Geneva, sans-serif;
-  background-color: transparent
+  background-color: transparent;
 }
 
-
-
+.login {
+  background: none;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 16px;
+  color: #494949;
+  text-decoration: underline;
+}
+.login:hover {
+  background: none;
+  border: none;
+  background-size: 0;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 16px;
+  color: skyblue;
+  text-decoration: underline;
+}
