@@ -15,14 +15,14 @@
 
 <body>
 <div class="container" >
-  <h2 class="name">{{topicTitle}}</h2>
+  <h2 class="name">{{topics[0].postTitle}}</h2>
 
 <div class="list-container">
 <topic-component  *ngFor="let topic of topics" [topic]="topic"
-  (deleteEvent) = "deleteTopic($event)">
+  (deleteEvent) = "deleteThis($event)">
 </topic-component>
 
-<mat-paginator style="width: 97%"
+<mat-paginator style="width: 100%;"
   [length]="count"
   [pageSize]="currentItemPerPage"
   [pageSizeOptions]="numberOfPages"
@@ -38,7 +38,7 @@
   </div>
     <span  class="sp"></span>
     <label>
-          <textarea #data maxlength="800" class="ta"
+          <textarea #data maxlength="800" class="ta" [(ngModel)]="subPost" name="sub_post"
                     placeholder="Comment Here!"></textarea>
 
     </label>
@@ -61,6 +61,7 @@
     <a class="bottom-a-1" > Group Raiser </a>
   </div>
 </div>
+
 </body>
 
 

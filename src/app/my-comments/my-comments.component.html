@@ -1,15 +1,5 @@
-<div class="main-div">
-  <div class="div-1">
-    <div class="div-3">
-      <div class="div-4">
-        <a class="time" matTooltip="create time">{{myComment.createTime}}</a>
-      </div>
-    </div>
-    <div class="div-2">
-      <a class="nick_name">{{myComment.nickName}}</a>
-      <a class="nick_name2">:</a>
-      <a
-        class="comment">{{myComment.postData }}</a>
-    </div>
-  </div>
+<div>
+  <a mat-flat-button disableRipple="true" (click)="toDetail(myComment.id)" class="nick_name"> {{myComment.nickName}}:</a> <br>
+  <a class="data" disabled="true">{{myComment.postData}}</a> <br>
+<a class="time"> - {{myComment.createTime | date: 'MM/dd/yyyy, h:mm a'}}</a> <br><br>
 </div>

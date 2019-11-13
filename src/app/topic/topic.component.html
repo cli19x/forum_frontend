@@ -1,39 +1,54 @@
 
-<div style="width: 100%; height: 250px; display: flex">
+<div style="display: inline;">
+
+<div style="width: 100%; height: 250px; display: flex; border-top: #DFDFDF solid 1px;">
   <div
-    style="min-width: 150px; min-height: 250px;  width: 15%; background-color: #F9F9F9; border-top: #DFDFDF solid 1px;
-      border-bottom: #DFDFDF solid 1px; border-right: #DFDFDF solid 1px; display: flex">
+    style="min-width: 150px; min-height: 250px;  width: 15%; background-color: #F9F9F9;  border-right: #DFDFDF solid 1px; display: flex">
     <div>
       <img style=" width: 100px; height: 100px; margin-top: 22px; margin-left: 23px; float: left"
            src="https://angularcli.s3.amazonaws.com/asserts/img/back.jpg">
       <a class="username">{{topic.nickName}}</a>
     </div>
   </div>
+
   <div
-    style="min-width: 300px; height: 250px; width: 85%; display: flex; background-color: white; align-content: center; border-top: #DFDFDF solid 1px;
-      border-bottom: #DFDFDF solid 1px; border-left: #DFDFDF solid 1px;float: left">
-    <div class="div-1">
+    style="min-width: 300px; height: auto; width: 85%; display: block; background-color: white;
+     align-content: center;  border-left: #DFDFDF solid 1px; float: left">
       <a class="data">{{topic.postData}}</a>
-      <div style="bottom: 20px; position: absolute; text-align: right; width: 90%; float: left; height: 20px; margin-right: 30px">
+      <div
+        style="text-align: right; width: 95%; height: 20%; margin-right: 10px;
+        display: inline-block">
         <a class="time" matTooltip="create time">{{topic.createTime | date: 'MM/dd/yyyy, h:mm a'}}</a>
-        <a mat-flat-button class="reply" matTooltip="Clickable link" (click)="toggle()"> reply(20)</a>
-        <a mat-flat-button class="del" (click)="deleteThis()">Delete</a>
+        <a *ngIf="isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link" (click)="toggle()">
+          reply{{topic.commentCount > 0 ? '('+topic.commentCount+')' : ''}}</a>
+        <a *ngIf="!isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link" (click)="toggle()">
+          collapse</a>
+        <a *ngIf="isSelf()" mat-flat-button class="del" (click)="deletePost(topic.id, topic.level)">delete</a>
       </div>
     </div>
+    <!--  </div>-->
+    <!--      <div *ngIf="!isHidden" class="content">-->
 
-<!--  </div>-->
-<!--  <div *ngIf="!isHidden" class="content">-->
-
-<!--    <div>-->
-<!--        <label>-->
-<!--          <textarea  #postContent class="commentBox" maxlength="300"-->
-<!--                     placeholder="Say something here" required="true">-->
-<!--        </textarea>-->
-<!--        </label>-->
-<!--        <button mat-button  class = "btn_post" (click)="onPost(postContent.value)">Post</button>-->
-<!--    </div>-->
-<!--    <div>-->
-
-<!--    </div>-->
- </div>
+    <!--        <div>-->
+    <!--          <label>-->
+    <!--          <textarea  #postContent class="commentBox" maxlength="300"-->
+    <!--                     placeholder="Say something here" required="true">-->
+    <!--        </textarea>-->
+    <!--          </label>-->
+    <!--          <button mat-button  class = "btn_post" (click)="onPost(postContent.value)">Post</button>-->
+    <!--        </div>-->
+    <!--        <div>-->
+    <!--    </div>-->
+</div>
+  <div *ngIf="isHidden" style="width: 100%; height: 1px; background-color: #DFDFDF"></div>
+  <div *ngIf="!isHidden"
+       style="width: 100%; height: auto; display: flex;">
+    <div
+      style="min-width: 150px;  height: auto;  width: 15%; background-color: #F9F9F9;  border-right: #DFDFDF solid 1.5px; display: flex">
+    </div>
+    <div style="margin-bottom: 10px; width: 85%; display: flex">
+       <div style="margin-top: 7px; margin-left: 5%; background-color: #DCDCDF; height: 200px; width: 95%">
+       </div>
+    </div>
+  </div>
 </div>

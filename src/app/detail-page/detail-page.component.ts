@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../_services/post.service';
 import {AuthService, NotificationService} from '../_services';
 import {Post} from '../_models/post';
 import {User} from '../_models/user';
 import {first} from 'rxjs/operators';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-detail-page',
@@ -12,6 +14,7 @@ import {first} from 'rxjs/operators';
   styleUrls: ['./detail-page.component.css']
 })
 export class DetailPageComponent implements OnInit {
+  subPost = '';
   displayingTopics: Post[] = [];
   topics: Post[] = [];
   submitted = false;
@@ -22,22 +25,21 @@ export class DetailPageComponent implements OnInit {
   postId: number;
   topicTitle: string;
   count: number;
-  private router: Router;
   currentItemPerPage = 20;
   currentPageIndex = 0;
   numberOfPages: number[] = [10, 20, 30, 50];
   constructor(private route: ActivatedRoute,
               private postService: PostService,
               private notifService: NotificationService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dialog: MatDialog,
+              private router: Router) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.postId = params.motherId;
-      this.topicTitle = params.postTitle;
-      console.log(this.postId);
+      this.postId = params.id;
     });
     this.getDetails();
   }
@@ -82,9 +84,6 @@ export class DetailPageComponent implements OnInit {
       this.displayingTopics = this.topics.slice(0);
     }
   }
-  deleteTopic($event) {
-
-  }
 
   onSubmit(comment: string) {
     console.log(this.currentUser.userId);
@@ -102,6 +101,7 @@ export class DetailPageComponent implements OnInit {
       postData: comment,
       id: undefined,
       createTime: undefined,
+      commentCount: undefined,
       postId: this.postId,
       level: undefined,
       nickName: undefined,
@@ -124,7 +124,9 @@ export class DetailPageComponent implements OnInit {
             this.getDetails();
             this.notifService.showNotif('Post success', 'confirm');
             this.loading = false;
-            location.reload();
+            this.getDetails();
+            this.subPost = '';
+            window.scrollTo(0, 0);
           }
         },
         error => {
@@ -132,6 +134,56 @@ export class DetailPageComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+
+  deleteThis(info: any) {
+    console.log(info);
+    const {ID, LEVEL} = info;
+    this.openDialog(ID, LEVEL);
+  }
+
+  openDialog(deleteId: number, deleteLevel: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure want to delete?',
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.deletePost(deleteId, deleteLevel);
+      }
+    });
+  }
+
+  deletePost(deleteId: number, deleteLevel: number) {
+    this.postService.deletePost(deleteId).subscribe(
+      del => {
+        console.log(del);
+        const {errMsg, msg} = del;
+        if (errMsg) {
+          this.notifService.showNotif(`Delete error: ${errMsg}`, 'error');
+        } else if (msg) {
+          console.log(msg);
+          if (deleteLevel === 1) {
+            console.log('ni ma bi');
+            this.router.navigate(['/']).then(res => {console.log(res);
+            });
+          } else {
+            this.topics = this.topics.filter(e => e.id !== deleteId);
+            this.onDefaultDisplaying();
+            window.scrollTo(0, 0);
+            this.notifService.showNotif(`Delete success`, 'confirm');
+          }
+        }
+      },
+      error => {
+        this.notifService.showNotif(`Delete error: ${error}`, 'error');
+      });
   }
 
 }

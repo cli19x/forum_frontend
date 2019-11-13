@@ -18,12 +18,12 @@ a{
 }
 
 .title {
-  margin-left: 15px;
+  margin-left: 5px;
+  text-align: left;
   margin-top: 15px;
   float: left;
   color: #2A7DFA;
   font-size: 20px;
-  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -31,7 +31,7 @@ a{
 }
 
 .title:hover {
-  margin-left: 15px;
+  margin-left: 5px;
   margin-top: 15px;
   float: left;
   color: #2A7DFA;
@@ -61,7 +61,7 @@ a{
   overflow: hidden;
   text-align: left;
   font-size: 18px;
-  margin-left: 15px;
+  margin-left: 18px;
   margin-top: 15px;
 }
 

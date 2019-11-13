@@ -69,6 +69,7 @@ import {SidebarModule} from 'ng-sidebar';
     MatDialogModule,
     SidebarModule.forRoot()
   ],
+  entryComponents: [ConfirmationDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -1,6 +1,6 @@
 <div class="main-div">
   <div class="div-1">
-    <a class="title">{{myTopic.postTitle}}</a>
+    <a mat-flat-button disableRipple="true" class="title" (click)="gotoDetail(myTopic.id)">{{myTopic.postTitle}}</a>
     <div class="div-2">
       <a
         class="reply">500</a>

@@ -17,20 +17,27 @@
                                            matTooltip="Edit">
 
       <img *ngIf="isEditing" src="https://angularcli.s3.amazonaws.com/asserts/img/ic_save.png"
-
+           (click)="onSave(ps.value)"
            alt="" style="width: 16px; height: 16px; margin-left: 4px;"
            matTooltip="Save">
     </h2>
     <div>
-      <p *ngIf="!isEditing">{{profileInfo.pSignature}}</p>
+      <p *ngIf="!isEditing" matTooltip="{{profileInfo.pSignature}}">{{profileInfo.pSignature}}</p>
+      <label>
+        <textarea #ps class="profile-ta" [ngStyle]="{'height': (heightNow)+'px', 'visibility':  (visible), 'transition': 'all 0.3s'}"
+                  [(ngModel)]="statusStr" maxlength="100"
+                  placeholder="Personal Signature">
 
+        </textarea>
+      </label>
     </div>
-    <mat-tab-group style="margin-top: 50px">
+    <mat-tab-group style="margin-top: 30px; display: inline-block; float: left; width: 100%">
       <mat-tab label="Posted By me">
         <div class="main_div2">
           <div class="post-div">
             <div class="list-container">
-              <my-topic-app *ngFor="let item of displayingPostIndexes" [myTopic]="item">
+              <my-topic-app *ngFor="let item of displayingPostIndexes" [myTopic]="item"
+                    (detailEvent)="gotoTopic($event)">
 
               </my-topic-app>
               <mat-paginator style="width: 100%;"
@@ -49,18 +56,16 @@
         <div class="main_div2">
           <div class="post-div">
             <div class="list-container">
-              <app-my-comments *ngFor="let comment of displayingCommentIndexes" [myComment]="comment">
-
+              <app-my-comments *ngFor="let comment of displayingCommentIndexes" [myComment]="comment"
+                               (commentEvent)="gotoTopic($event)">
               </app-my-comments>
-              <mat-card style="width: 95%; float: left; margin-top: 10px; margin-bottom: 10px">
-                <mat-paginator
+                <mat-paginator style="width: 100%"
                   [length]="countComment"
                   [pageSize]="currentCommentItemPerPage"
                   [pageSizeOptions]="numberOfPages"
                   (page)="onCommentPaginateChanging($event)"
                   [showFirstLastButtons]="true">
                 </mat-paginator>
-              </mat-card>
             </div>
           </div>
         </div>

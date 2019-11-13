@@ -1,7 +1,7 @@
 
 .div-1 {
-  float: left;
   width: 99%;
+  height: auto;
   text-align: right;
   padding: 10px;
   position: relative;
@@ -11,8 +11,9 @@
   float: left;
   margin-top: 12px;
   color: #494949;
-  width: 70%;
-  height: 220px;
+  width: 95%;
+  margin-left: 22px;
+  height: 80%;
   text-align: left;
   font-size: 18px
 }
@@ -32,8 +33,8 @@
   font-size: 12px;
   margin-left: 20px;
   color: #A1A1DA;
+  border: none;
   background: none;
-
 }
 
 .reply:hover {
@@ -43,7 +44,7 @@
   margin-left: 20px;
   color: #7F7FCF;
   background: none;
-
+  border: none;
 }
 
 
@@ -114,8 +115,7 @@
   color: #A1A1DA;
   width: 10%;
   padding-left: 1px;
-  margin-left: 10px
-
+  margin-left: 10px;
 }
 
 .del:hover {

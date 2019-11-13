@@ -7,6 +7,7 @@ import {first} from 'rxjs/operators';
 import {Profile} from '../_models/Profile';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Post} from '../_models/post';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -24,6 +25,9 @@ export class ProfileComponent implements OnInit {
   loading = false;
   submitted = false;
   isEditing = false;
+  heightNow = 0;
+  visible = 'collapse';
+  statusStr = '';
   statusForm: FormGroup;
 
   comments: Post[] = [];
@@ -39,7 +43,8 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private postService: PostService,
     private notifService: NotificationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -139,6 +144,7 @@ export class ProfileComponent implements OnInit {
       postTitle: undefined,
       id: undefined,
       postData: data1,
+      commentCount: 0,
       createTime: undefined,
       postId: undefined,
       nickName: undefined,
@@ -187,7 +193,7 @@ export class ProfileComponent implements OnInit {
             this.profileInfo = userInfo;
             console.log(this.profileInfo);
             this.submitted = false;
-
+            this.statusStr = this.profileInfo.pSignature;
           }
         },
         error => {
@@ -200,12 +206,28 @@ export class ProfileComponent implements OnInit {
 
   onEdit() {
     this.isEditing = !this.isEditing;
+    this.heightNow = 80;
+    this.visible = 'visible';
   }
 
 
-  onSave(statusS: string) {
+  async onSave(statusS: string) {
     this.updateStatus(statusS);
+
+    this.heightNow = 0;
+    this.visible = 'hidden';
+    await this.delay(300);
+    this.updateProfile();
     this.isEditing = !this.isEditing;
-    console.log(`${statusS} save`);
+  }
+  private delay(ms: number) {
+
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  gotoTopic(id: number) {
+    this.router.navigate(['/topic', {id}]).then(res => {
+      console.log(res);
+    });
   }
 }

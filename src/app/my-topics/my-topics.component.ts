@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Index} from '../_models';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 
@@ -11,7 +11,11 @@ import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-d
 
 export class MyTopicsComponent implements OnInit {
   @Input() myTopic: Index;
+  @Output() detailEvent = new EventEmitter<number>();
   constructor() {}
   ngOnInit() {
+  }
+  gotoDetail(id: number) {
+    this.detailEvent.emit(id);
   }
 }

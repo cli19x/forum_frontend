@@ -1,10 +1,11 @@
 <header>
-  <mat-toolbar *ngIf="isUser" style="background-color: #242424; position: sticky;">
+  <mat-toolbar *ngIf="isUser" style="background-color: #242424; height:70px;">
     <button mat-button [disableRipple]="true" routerLink="/" matTooltip="Home">
       <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_title_logo.png" class="img-responsive2" alt="Home">
     </button>
     <span class="example-fill-remaining-space"></span>
     <a mat-flat-button class="top-a" (click)="logout()">Logout </a>
+    <div style="height: 32px; margin-top: 2px; width: 1px; background-color: rgba(216,216,216, 0.1);"></div>  &nbsp; &nbsp;
     <header>Hi, {{currentUser.nickName}}</header> &nbsp;
     <button mat-button [disableRipple]="true" routerLink="/profile" matTooltip="Profile">
       <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_user.png" class="img-responsive" alt="Profile"

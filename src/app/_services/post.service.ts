@@ -26,7 +26,7 @@ export class PostService {
     return this.http.post<any>('http://end.greatbestus.com:8080/getUserComments', userId);
   }
 
-  delPost(postId: number) {
+  deletePost(postId: number) {
     return this.http.post<any>('http://end.greatbestus.com:8080/deletePostById', {postId});
   }
 }

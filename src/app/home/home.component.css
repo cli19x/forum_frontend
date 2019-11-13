@@ -20,9 +20,6 @@ body {
 
 }
 
-
-
-
 .example-container {
   top: 0;
   background: transparent;
@@ -84,7 +81,7 @@ body {
 .div-1 {
   padding: 0;
   width: 100%;
-  height: 400px;
+  height: 300px;
   min-height: 200px;
   overflow: hidden
 }
@@ -191,7 +188,7 @@ body {
 .main_div {
   margin-left: 20%;
   float: left;
-  width: 58.3%;
+  width: 58.2%;
   height: auto;
   column-count: 1;
   background-color: #F9F9F9;
@@ -218,6 +215,7 @@ mark {
   filter: blur(8px);
   height: 600%;
   width: 600%;
+  transition: all 0.3s
 }
 
 .blur-img2 {

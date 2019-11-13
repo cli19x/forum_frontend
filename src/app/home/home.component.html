@@ -17,28 +17,27 @@
   </mat-toolbar>
 </div>
 
-
-
 <div class="div-1">
-  <div style="width: 21%; height: 100%; float: left">
+  <div style="width: 19%; height: 100%; float: left">
      <img id="img1" [src]="[currentUrl]" class="blur-img">
   </div>
-  <div style="width: 58%; filter: blur(0px); float: left; height: 100%">
+  <div style="width: 62%; filter: blur(0px); float: left; height: 100%">
     <slideshow #slideshow style="alignment: center" [height]="'100%'"
                [minHeight]="'100%'"
                (click)="gotoAdsLink($event)"
                [autoPlay]="true"
+               [dotColor]="'#D6471C'"
                [fullscreen]="false"
                [showArrows]="true"
-               autoPlayInterval="4800"
+               autoPlayInterval="5600"
                [imageUrls]="imageSources"
                [lazyLoad]="imageSources?.length > 1"
                [autoPlayWaitForLazyLoad]="true"
-               [showDots]="false"
+               [showDots]="true"
                (onIndexChanged)="display($event)">
     </slideshow>
   </div>
-  <div style="width: 21%; height: 100%; float: left">
+  <div style="width: 19%; height: 100%; float: left">
      <img [src]="[currentUrl]" class="blur-img2" >
   </div>
 </div>

@@ -114,6 +114,7 @@ export class HomeComponent implements OnInit {
       postData: this.f.content.value,
       createTime: undefined,
       postId: -1,
+      commentCount: 0,
       id: undefined,
       level: undefined,
       nickName: undefined,
@@ -199,6 +200,10 @@ export class HomeComponent implements OnInit {
       console.log('right');
       return;
     }
+    if ($event.path[0].tagName === 'BUTTON') {
+      return;
+    }
+    console.log($event);
     console.log(this.linkSources[this.currentImageIndex]);
     window.open(this.linkSources[this.currentImageIndex], '_blank');
   }
@@ -228,8 +233,8 @@ export class HomeComponent implements OnInit {
   }
 
   onShowDetail(data: Index) {
-    this.router.navigate(['/topic', {motherId: data.id, postTitle: data.postTitle}]).then(res => {
-      console.log(data.id);
+    this.router.navigate(['/topic', {id: data.id}]).then(res => {
+      console.log(res);
     });
   }
 }

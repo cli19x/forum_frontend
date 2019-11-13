@@ -33,6 +33,9 @@ body{
 }
 .list-container {
   width: 100%;
+  height: auto;
+  display: inline-block;
+  border-bottom: #DFDFDF solid 1px;
 }
 
 

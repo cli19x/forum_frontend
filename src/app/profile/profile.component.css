@@ -107,6 +107,10 @@ p {
   font-size:18px;
   color:#333;
   text-align:justify;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
 }
 
 .movies {
@@ -156,8 +160,10 @@ p {
 
 .profile-ta {
   resize: none;
+  visibility: collapse;
+  padding: 0;
   width: 67%;
-  min-height: 100px;
+  height: 80px;
   font-size: 16px;
   float: left;
   border-color: #DFDFDF;
