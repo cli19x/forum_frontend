@@ -1,43 +1,68 @@
 <body>
 <div class='container'>
-  <div class='header'>
+  <div class='header' >
+    <img  class='background' *ngIf="background" [src]="background" alt=""/>
+    <a mat-flat-button  class="bg-edit" matTooltip="Change Background"
+       (click)="chooseBackgroundFile()">
+      <img class="bg-img" src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_set_two.png" alt="">
+    </a>
     <div class='person'>
-      <img class='dp' src="https://angularcli.s3.amazonaws.com/asserts/img/pen.png" alt="">
+      <div class="container_pic">
+        <img  class='dp' *ngIf="avatar" [src]="avatar" alt="">
+        <a mat-flat-button class="middle" (click)="chooseAvatarFile()">
+          <img class="dp2" src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_set.png" alt="">
+        </a>
+        <input style="visibility: hidden; width: 0; height: 0"
+               type="file" id="upload-avatar" name="upload-file" accept="image/*" ngf-max-size="20MB"
+               (change)="addAvatar($event)">
+        <input style="visibility: hidden; width: 0; height: 0"
+               type="file" id="upload-background" name="upload-file" accept="image/*" ngf-max-size="20MB"
+               (change)="addBackground($event)">
+      </div>
     </div>
-    <div class='name'>{{profileInfo.firstName}} {{profileInfo.lastName}}</div>
+    <div class='name' *ngIf="profileInfo">{{profileInfo.nickname}}</div>
   </div>
   <div class='info'>
-    <div class="email">{{profileInfo.eMail}} </div>
-    <br><br>
-    <div class="createTime">create Time: {{profileInfo.createTime | date: 'MM/dd/yyyy, h:mm a'}}</div>
+    <div style="width: 100%; height: auto; display: flex; border-bottom:1px solid #DFDFDF;">
+      <div class="email">
+        <p *ngIf="profileInfo">{{profileInfo.email}}</p>
+      </div>
+      <div class="createTime">
+        <p *ngIf="profileInfo">Member Since {{profileInfo.createTime | date: 'MM/dd/yyyy'}}</p>
+      </div>
+      <div class="trueName">
+        <p *ngIf="profileInfo">{{profileInfo.firstName}} {{profileInfo.lastName}}</p>
+      </div>
+    </div>
     <h2 class="title">Personal Status <img *ngIf="!isEditing"
-                                           src="https://angularcli.s3.amazonaws.com/asserts/img/ic_edit.png"
+                                           src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_edit.png"
                                            (click)="onEdit()"
                                            alt="" style="width: 16px; height: 16px; margin-left: 4px;"
                                            matTooltip="Edit">
 
-      <img *ngIf="isEditing" src="https://angularcli.s3.amazonaws.com/asserts/img/ic_save.png"
+      <img *ngIf="isEditing" src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_save.png"
            (click)="onSave(ps.value)"
            alt="" style="width: 16px; height: 16px; margin-left: 4px;"
            matTooltip="Save">
     </h2>
     <div>
-      <p *ngIf="!isEditing" matTooltip="{{profileInfo.pSignature}}">{{profileInfo.pSignature}}</p>
+      <p class="sig" *ngIf="!isEditing && profileInfo">{{profileInfo.signature}}</p>
       <label>
-        <textarea #ps class="profile-ta" [ngStyle]="{'height': (heightNow)+'px', 'visibility':  (visible), 'transition': 'all 0.3s'}"
+        <textarea #ps class="profile-ta"
+                  [ngStyle]="{'height': (heightNow)+'px', 'visibility':  (visible), 'transition': 'all 0.3s'}"
                   [(ngModel)]="statusStr" maxlength="100"
                   placeholder="Personal Signature">
 
         </textarea>
       </label>
     </div>
-    <mat-tab-group style="margin-top: 30px; display: inline-block; float: left; width: 100%">
+    <mat-tab-group style="margin-top: 10px; display: inline-block; float: left; width: 96%; margin-left: 2%; margin-right: 2%">
       <mat-tab label="Posted By me">
         <div class="main_div2">
           <div class="post-div">
             <div class="list-container">
-              <my-topic-app *ngFor="let item of displayingPostIndexes" [myTopic]="item"
-                    (detailEvent)="gotoTopic($event)">
+              <my-topic-app *ngFor="let item of displayingTopicIndexes" [myTopic]="item"
+                            (detailEvent)="gotoTopic($event)">
 
               </my-topic-app>
               <mat-paginator style="width: 100%;"
@@ -52,20 +77,43 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Commended By me">
+
+      <mat-tab label="Replied By me">
+        <div class="main_div2">
+          <div class="post-div">
+            <div class="list-container">
+              <app-my-replies *ngFor="let item of displayingReplyIndexes" [myReply]="item"
+                            (detailEvent)="gotoTopic($event)">
+
+              </app-my-replies>
+              <mat-paginator style="width: 100%;"
+                             [length]="countReplies"
+                             [pageSize]="currentRepliesItemPerPage"
+                             [pageSizeOptions]="numberOfPages"
+                             (page)="onRepliesPaginateChanging($event)"
+                             [showFirstLastButtons]="true">
+              </mat-paginator>
+
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+
+      <mat-tab label="Commented By me">
         <div class="main_div2">
           <div class="post-div">
             <div class="list-container">
               <app-my-comments *ngFor="let comment of displayingCommentIndexes" [myComment]="comment"
-                               (commentEvent)="gotoTopic($event)">
+                               (detailEvent)="gotoTopic($event)" (userEvent)="gotoUser($event)">
               </app-my-comments>
-                <mat-paginator style="width: 100%"
-                  [length]="countComment"
-                  [pageSize]="currentCommentItemPerPage"
-                  [pageSizeOptions]="numberOfPages"
-                  (page)="onCommentPaginateChanging($event)"
-                  [showFirstLastButtons]="true">
-                </mat-paginator>
+              <mat-paginator style="width: 100%"
+                             [length]="countComment"
+                             [pageSize]="currentCommentItemPerPage"
+                             [pageSizeOptions]="numberOfPages"
+                             (page)="onCommentPaginateChanging($event)"
+                             [showFirstLastButtons]="true">
+              </mat-paginator>
             </div>
           </div>
         </div>

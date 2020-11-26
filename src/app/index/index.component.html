@@ -1,18 +1,30 @@
-<mat-card class="mat-card">
+<div class="main-card">
   <div class="div-1">
-    <a class="title">{{index.postTitle}}</a>
-    <div class="div-2">
-      <img
-        class="nick_name_img"
-        src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply.png" alt=""/>
-      <a class="nick_name">{{index.nickName}}</a>
+    <a mat-flat-button [disableRipple]="true" class="title" (click)="detailPost(index.pid)"
+    matTooltip="{{index.postTitle}}">
+      {{index.postTitle}}</a>
+
+      <a mat-flat-button [disableRipple]="true" class="time" matTooltip="create time">
+        <img
+          class="nick_name_img"
+          src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_clock.png" alt=""/>
+        {{createDateString}}
+      </a>
+
+      <a mat-flat-button [disableRipple]="true" class="nick_name" (click)="seeOthers()">
+        <img
+          class="nick_name_img"
+          src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_person.png" alt=""/>
+        {{index.nickname}}
+      </a>
+    <div style="width: 100%">
+      <a class="data" matTooltip="{{index.postData}}">{{index.postData}}</a>
+      <a class="reply">{{index.levelCount}}</a>
     </div>
-    <a class="data">{{index.postData}}</a>
-    <div class="div-3">
-        <a
-          class="reply">500</a>
-        <img class="reply-img"  src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply_i.png" matTooltip="reply number" alt=""/>
-        <a class="time" matTooltip="create time">{{index.createTime | date: 'MM/dd/yyyy, h:mm a'}}</a>
-      </div>
+    <div style="width: 100%;">
+      <a class="time2" style="padding-top: 20px; margin-left: 18px" matTooltip="Meet Time"
+        >{{dealDateString}}
+      </a>
     </div>
-</mat-card>
+  </div>
+</div>

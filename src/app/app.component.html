@@ -1,18 +1,21 @@
 <header>
-  <mat-toolbar *ngIf="isUser" style="background-color: #242424; height:70px;">
+  <mat-toolbar *ngIf="isUser" style="background-color: #242424; height:70px; width: 100%; position: relative">
     <button mat-button [disableRipple]="true" routerLink="/" matTooltip="Home">
-      <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_title_logo.png" class="img-responsive2" alt="Home">
+      <img src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_title.png" class="img-responsive2" alt="Home">
     </button>
     <span class="example-fill-remaining-space"></span>
     <a mat-flat-button class="top-a" (click)="logout()">Logout </a>
     <div style="height: 32px; margin-top: 2px; width: 1px; background-color: rgba(216,216,216, 0.1);"></div>  &nbsp; &nbsp;
-    <header>Hi, {{currentUser.nickName}}</header> &nbsp;
+    <header>Hi, {{currentUser.nickname}}</header> &nbsp;
     <button mat-button [disableRipple]="true" routerLink="/profile" matTooltip="Profile">
-      <img src="https://angularcli.s3.amazonaws.com/asserts/img/ic_user.png" class="img-responsive" alt="Profile"
+      <img [src]="avatar" class="img-responsive" alt="Profile"
            style="border: 2px white;">
     </button>
   </mat-toolbar>
 </header>
 
-<router-outlet></router-outlet>
+<router-outlet>
+</router-outlet>
+
+
 

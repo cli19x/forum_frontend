@@ -8,6 +8,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DetailPageComponent } from './detail-page/detail-page.component';
+import {OtherProfileComponent} from './other-profile/other-profile.component';
+import {AboutUsComponent} from './about-us/about-us.component';
 
 // , canActivate: [AuthGuard]
 const routes: Routes = [
@@ -21,7 +23,9 @@ const routes: Routes = [
   },
   { path: 'forget_password', component: ForgetPasswordComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'other-profile', component: OtherProfileComponent, canActivate: [AuthGuard] },
   { path: 'topic', component: DetailPageComponent, canActivate: [AuthGuard] },
+  { path: 'about-us', component: AboutUsComponent},
   { path: '**', redirectTo: '' }
 ];
 

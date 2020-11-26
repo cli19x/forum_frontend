@@ -11,18 +11,17 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthService, private notif: NotificationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        console.log('Error Interceptor request:', request);
         return next.handle(request).pipe(catchError(err => {
             if ([401, 403].indexOf(err.status) !== -1) {
-                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                this.authenticationService.logout();
-                console.log(err.status);
-                location.reload(true);
+                if (!localStorage.getItem('currentUser')) {
+                  this.authenticationService.logout();
+                  return throwError('Login error: incorrect email or password');
+                } else {
+                  this.authenticationService.logout();
+                  return throwError('Session has expired, please sign in again');
+                }
             }
-            console.log(err.status);
             const error = err.error.message || err.statusText;
-            this.notif.showNotif(error, 'error');
             return throwError(error);
         }));
     }

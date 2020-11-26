@@ -9,12 +9,13 @@ div {
 }
 
 .nick_name {
-  background: none;
+  padding: 0;
+  background: transparent;
   background-size: 0;
   color: #FAAC27;
-  width: 20%;
+  width: auto;
   margin-top: 5px;
-  margin-left: 10px;
+  margin-left: 5px;
   text-align: left;
   font-size: 14px;
   white-space: nowrap;
@@ -23,23 +24,48 @@ div {
 }
 
 .nick_name:hover {
+  color: #fccd7d;
+}
+
+.nick_name_d {
+  padding: 0;
   color: #FAAC27;
+  background-color: transparent;
+  width: auto !important;
   margin-top: 5px;
-  background: none;
+  margin-left: 5px;
   text-align: left;
-  margin-left: 10px;
-  width: 20%;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+.title {
+  padding: 0;
+  text-align: right;
+  background: none;
+  background-size: 0;
+  color: #2A7DFA;
+  width: auto;
+  margin-top: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title:hover {
   text-decoration: underline;
 }
 
 .data {
+  color: #494949;
   background: none;
+  height: auto;
   background-size: 0;
-  width: 95%;
+  width: 70%;
   margin-left: 27px;
   font-size: 13px;
   text-align: left;
@@ -51,5 +77,7 @@ div {
 .time {
   color: #888888;
   font-size: 12px;
-  margin: 27px;
+  height: auto;
+  margin-bottom: 10px;
+  width: 22px;
 }

@@ -1,67 +1,70 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PostService} from '../_services/post.service';
+import {EventService} from '../_services/event.service';
 import {AuthService, NotificationService} from '../_services';
-import {Post} from '../_models/post';
-import {User} from '../_models/user';
+import {TopicDetail} from '../_models/topicDetail';
 import {first} from 'rxjs/operators';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
+import {UserInfo} from '../_models/userInfo';
+import {TopicComponent} from '../topic/topic.component';
+import {ResponseObject} from '../_models/responseObject';
 
 @Component({
   selector: 'app-detail-page',
   templateUrl: './detail-page.component.html',
-  styleUrls: ['./detail-page.component.css']
+  styleUrls: ['./detail-page.component.css'],
 })
 export class DetailPageComponent implements OnInit {
+  @ViewChild(TopicComponent, {static: true}) childTopic: TopicComponent;
   subPost = '';
-  displayingTopics: Post[] = [];
-  topics: Post[] = [];
+  displayingTopics: TopicDetail[] = [];
+  topics: TopicDetail[] = [];
   submitted = false;
   loading = false;
-  currentUser: User;
+  currentUser: UserInfo;
   isInvalid = false;
   errorMessage = '';
   postId: number;
-  topicTitle: string;
   count: number;
   currentItemPerPage = 20;
   currentPageIndex = 0;
   numberOfPages: number[] = [10, 20, 30, 50];
+  loaded = false;
   constructor(private route: ActivatedRoute,
-              private postService: PostService,
-              private notifService: NotificationService,
+              private postService: EventService,
+              private notifyService: NotificationService,
               private authService: AuthService,
               private dialog: MatDialog,
               private router: Router) {
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
+
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.route.params.subscribe(params => {
-      this.postId = params.id;
+      this.postId = params.mid;
     });
     this.getDetails();
   }
 
   getDetails() {
-    this.postService.getTopics(this.postId).subscribe(
-      indexes => {
-        console.log(indexes);
-        const {errMsg, msg, userPosts} = indexes;
-        if (errMsg) {
-          this.notifService.showNotif(`Load topics error: ${errMsg}`, 'error');
-        } else if (msg) {
-          console.log(msg);
-          console.log(userPosts);
-          this.topics = userPosts;
-          console.log(this.topics);
+    this.postService.getTopicDetail(this.postId).subscribe(
+      detail => {
+        const responseObject: ResponseObject = detail;
+        if (responseObject.errMsg) {
+          this.notifyService.showNotif(`Load topic detail error: ${responseObject.errMsg}`, 'error');
+          this.logout();
+        } else if (responseObject.msg) {
+          this.topics = responseObject.objects as TopicDetail[];
           this.count = this.topics.length;
+          this.notifyService.showNotif(responseObject.msg, 'confirm');
           this.onDefaultDisplaying();
+          this.loaded = true;
         }
       },
       error => {
-        this.notifService.showNotif(`Load topics error: ${error}`, 'error');
+        this.notifyService.showNotif(`Load topics error: ${error}`, 'error');
       });
   }
 
@@ -85,44 +88,41 @@ export class DetailPageComponent implements OnInit {
     }
   }
 
-  onSubmit(comment: string) {
-    console.log(this.currentUser.userId);
+  onSubmit(reply: string) {
     this.isInvalid = false;
     this.submitted = true;
-    if (!comment.replace(/\s/g, '').length) {
-      this.errorMessage = 'Invalid input in Main Content';
+    if (!reply.replace(/\s/g, '').length) {
+      this.errorMessage = 'Invalid input in Reply Content';
       this.isInvalid = true;
       return;
     }
     this.loading = true;
-    const post: Post = {
-      token: this.currentUser.token,
-      postTitle: undefined,
-      postData: comment,
-      id: undefined,
+    const post: TopicDetail = {
+      postTitle: this.topics[0].postTitle,
+      postData: reply,
+      pid: undefined,
+      uid: this.currentUser.uid,
+      mid: this.postId,
       createTime: undefined,
       commentCount: undefined,
-      postId: this.postId,
-      level: undefined,
-      nickName: undefined,
-      motherPostId: undefined,
-      userId: this.currentUser.userId
+      nickname: this.currentUser.nickname,
+      dealDate: this.topics[0].dealDate,
+      week: this.topics[0].week,
+      levelCount: undefined,
+      commentDetailList: undefined
     };
     this.count++;
-    console.log(post);
-    this.postService.submitPost(post)
+    this.postService.postTopicOrPost(post)
       .pipe(first())
-      .subscribe(newPost => {
-          console.log('response', newPost);
-          const {msg, errMsg} = newPost;
-          if (errMsg) {
-            console.log('Post failed');
-            this.notifService.showNotif(`Post error: ${errMsg}`, 'confirm');
+      .subscribe(newLevel => {
+          const responseObject: ResponseObject = newLevel;
+          if (responseObject.errMsg) {
+            this.notifyService.showNotif(`Post error: ${responseObject.errMsg}`, 'error');
             this.loading = false;
-          } else if (msg) {
-            console.log(msg);
+            this.logout();
+          } else if (responseObject.msg) {
             this.getDetails();
-            this.notifService.showNotif('Post success', 'confirm');
+            this.notifyService.showNotif(responseObject.msg, 'confirm');
             this.loading = false;
             this.getDetails();
             this.subPost = '';
@@ -130,60 +130,73 @@ export class DetailPageComponent implements OnInit {
           }
         },
         error => {
-          this.notifService.showNotif(`Post error: ${error}`, 'error');
+          this.notifyService.showNotif(`Post error: ${error}`, 'error');
           this.loading = false;
         }
       );
   }
 
   deleteThis(info: any) {
-    console.log(info);
-    const {ID, LEVEL} = info;
-    this.openDialog(ID, LEVEL);
+    const {PID, MID} = info;
+    this.openDialog(PID, MID);
   }
 
-  openDialog(deleteId: number, deleteLevel: number) {
+
+  openDialog(pid: number, mid: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         message: 'Are you sure want to delete?',
         buttonText: {
-          ok: 'Yes',
-          cancel: 'No'
+          ok: 'Confirm',
+          cancel: 'Cancel'
         }
       }
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.deletePost(deleteId, deleteLevel);
+        this.deletePost(pid, mid);
       }
     });
   }
 
-  deletePost(deleteId: number, deleteLevel: number) {
-    this.postService.deletePost(deleteId).subscribe(
+  deletePost(pid: number, mid: number) {
+    this.postService.deleteTopicOrPost(pid, this.currentUser.uid, mid).subscribe(
       del => {
-        console.log(del);
-        const {errMsg, msg} = del;
-        if (errMsg) {
-          this.notifService.showNotif(`Delete error: ${errMsg}`, 'error');
-        } else if (msg) {
-          console.log(msg);
-          if (deleteLevel === 1) {
-            console.log('ni ma bi');
-            this.router.navigate(['/']).then(res => {console.log(res);
+        const responseObject: ResponseObject = del;
+        if (responseObject.errMsg) {
+          this.notifyService.showNotif(`Delete error: ${responseObject.errMsg}`, 'error');
+        } else if (responseObject.msg) {
+          if (mid === -1) {
+            this.router.navigate(['/']).then(res => {
+              console.log(res);
             });
           } else {
-            this.topics = this.topics.filter(e => e.id !== deleteId);
+            this.topics = this.topics.filter(e => e.pid !== pid);
+
             this.onDefaultDisplaying();
-            window.scrollTo(0, 0);
-            this.notifService.showNotif(`Delete success`, 'confirm');
+            this.notifyService.showNotif(responseObject.msg, 'confirm');
           }
         }
       },
       error => {
-        this.notifService.showNotif(`Delete error: ${error}`, 'error');
+        this.notifyService.showNotif(`Delete error: ${error}`, 'error');
       });
+  }
+
+  onPaste(event: ClipboardEvent) {
+    const clipboardData = event.clipboardData;
+    const pastedText = clipboardData.getData('text');
+    if (pastedText.length > 800) {
+      this.subPost = pastedText.slice(0, 800);
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']).then(res => {
+      console.log(res);
+    });
   }
 
 }

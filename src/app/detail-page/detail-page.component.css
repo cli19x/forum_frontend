@@ -6,9 +6,11 @@ body{
   min-height: auto;
   width:100%;
   background-size: cover;
+  overflow: hidden
 }
 .container {
   width:65%;
+  min-width: 980px;
   min-height: 300px;
   margin-left: 17.5%;
   background: white;
@@ -18,10 +20,11 @@ body{
 
 .name {
   color:#25272b;
+  overflow-wrap: break-word;
   font-family: Roboto,Arial,Helvetica,sans-serif;
   text-shadow:1px 1px 1px #eee;
-  margin-left: 12px;
-  width: 100%;
+  margin-left: 1%;
+  width: 90%;
   text-align: left;
   font-size:20px;
 }
@@ -34,6 +37,7 @@ body{
 .list-container {
   width: 100%;
   height: auto;
+  min-width: 800px;
   display: inline-block;
   border-bottom: #DFDFDF solid 1px;
 }
@@ -194,7 +198,7 @@ body{
   height: 40px;
   min-height: 30px;
   background-color: #FAFAFA;
-  margin-top: 16px;
+  margin-top: 12px;
   float: left;
   display: inline-block;
   border: 1px solid #DFDFDF;

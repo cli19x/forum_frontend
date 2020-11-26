@@ -10,7 +10,7 @@ export class NotificationService {
 
   public showNotif(message, action = 'error', duration = 3000): void {
     this.snackBar.open(message, action, { duration }).onAction().subscribe(() => {
-      console.log('Notififcation action performed');
+      console.log(message);
     });
   }
 

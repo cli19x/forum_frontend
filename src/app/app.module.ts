@@ -16,7 +16,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtInterceptor} from './_interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './_interceptors/error.interceptor';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ChoosingPreferencesComponent } from './choosing-preferences/choosing-preferences.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { TopicComponent } from './topic/topic.component';
 import {GalleryModule} from 'ng-gallery';
@@ -28,12 +27,17 @@ import { MyCommentsComponent } from './my-comments/my-comments.component';
 import { MyTopicsComponent } from './my-topics/my-topics.component';
 import { CommentComponent } from './comment/comment.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material';
-import { ProfileDialogComponent } from './profile-dialog/profile-dialog.component';
 import { DetailPageComponent } from './detail-page/detail-page.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {SidebarModule} from 'ng-sidebar';
-
+import { OtherProfileComponent } from './other-profile/other-profile.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { MyRepliesComponent } from './my-replies/my-replies.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { DatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { DatetimePopupModule } from 'ngx-bootstrap-datetime-popup';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,6 @@ import {SidebarModule} from 'ng-sidebar';
     HomeComponent,
     RegisterComponent,
     ResetPasswordComponent,
-    ChoosingPreferencesComponent,
     ForgetPasswordComponent,
     TopicComponent,
     IndexComponent,
@@ -50,9 +53,11 @@ import {SidebarModule} from 'ng-sidebar';
     MyCommentsComponent,
     MyTopicsComponent,
     CommentComponent,
-    ProfileDialogComponent,
     DetailPageComponent,
     ConfirmationDialogComponent,
+    OtherProfileComponent,
+    AboutUsComponent,
+    MyRepliesComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,11 @@ import {SidebarModule} from 'ng-sidebar';
     SlideshowModule,
     NgMarqueeModule,
     MatDialogModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    DatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    DatetimePopupModule.forRoot()
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [

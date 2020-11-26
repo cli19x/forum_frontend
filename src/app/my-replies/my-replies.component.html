@@ -1,0 +1,9 @@
+<div class="main-div">
+  <div class="div-1">
+    <a mat-flat-button disableRipple="true" class="title" (click)="toDetail(myReply.mid)">{{myReply.postTitle}}</a>
+    <div class="div-2">
+      <a mat-flat-button disableRipple="true" class="time" matTooltip="create time">{{myReply.createTime}}</a>
+    </div>
+    <p class="data">{{myReply.postData}}</p>
+  </div>
+</div>

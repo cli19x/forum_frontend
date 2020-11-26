@@ -3,9 +3,11 @@
     <mat-toolbar-row>
       <div style="width: 100%;">
         <ng-marquee duration="26">
-          <mark style=""> <a href="https://www.tiktok.com/en/" target="_blank" style="color:
-           white; text-decoration: none"> 亲爱的顾客朋友们，现在购买，只需要998，
-            顾客朋友们，走过路过不要错过。。。窝窝头，一块钱4个，嘿嘿！！ 谁他妈买小米啊 </a></mark>
+          <mark style=""> <a href="https://www.pokemongo.com/en-us/" target="_blank" style="color:
+           white; text-decoration: none"> Evolution Event Look forward
+            to Evolution items from raids, longer-lasting Lure Modules, and increased encounters with Pokémon that
+            evolve in special ways. From Thursday, December 5, 2019, at 1:00 p.m
+            . to Thursday, December 12, 2019, at 1:00 p.m. PST (GMT −8) </a></mark>
 
         </ng-marquee>
       </div>
@@ -15,9 +17,9 @@
 
 <body>
 <div class="container" >
-  <h2 class="name">{{topics[0].postTitle}}</h2>
+  <h2 *ngIf="loaded" class="name">{{topics[0].postTitle}}</h2>
 
-<div class="list-container">
+<div *ngIf="loaded" class="list-container">
 <topic-component  *ngFor="let topic of topics" [topic]="topic"
   (deleteEvent) = "deleteThis($event)">
 </topic-component>
@@ -33,14 +35,13 @@
 
 <div style="width: 95%; margin-left: 5%">
   <div class="n_t_div">
-    <img src="https://angularcli.s3.amazonaws.com/asserts/img/pen.png" class="n_t_img" alt="">
-    <a class="new_topic">New Comment</a>
+    <img src="https://group-raiser-angular.s3.amazonaws.com/assets/pen.png" class="n_t_img" alt="">
+    <a class="new_topic">New reply</a>
   </div>
     <span  class="sp"></span>
     <label>
-          <textarea #data maxlength="800" class="ta" [(ngModel)]="subPost" name="sub_post"
-                    placeholder="Comment Here!"></textarea>
-
+          <textarea #data maxlength="800" class="ta" [(ngModel)]="subPost" name="sub_post" (paste)="onPaste($event)"
+                    placeholder="Reply Here!"></textarea>
     </label>
   <span style="font-size: 12px; margin-right: 30%; float: right; margin-top: 5px; color: #888888">
             {{800 - data.value.length}} / 800 characters</span>
@@ -57,7 +58,7 @@
     <a  mat-flat-button [disableRipple]="true" class="bottom-a"> Help </a> &nbsp;
     <a mat-flat-button [disableRipple]="true" class="bottom-a"> Contact </a> &nbsp;
     <a mat-flat-button [disableRipple]="true" class="bottom-a"> Privacy </a> &nbsp;
-    <a mat-flat-button [disableRipple]="true" class="bottom-a"> About Us </a> &nbsp;
+    <a mat-flat-button [disableRipple]="true" routerLink="/about-us" class="bottom-a"> About Us </a> &nbsp;
     <a class="bottom-a-1" > Group Raiser </a>
   </div>
 </div>

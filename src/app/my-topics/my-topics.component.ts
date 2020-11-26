@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Index} from '../_models';
-import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {TopicDetail} from '../_models/topicDetail';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -10,12 +9,14 @@ import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-d
 })
 
 export class MyTopicsComponent implements OnInit {
-  @Input() myTopic: Index;
+  @Input() myTopic: TopicDetail;
   @Output() detailEvent = new EventEmitter<number>();
   constructor() {}
   ngOnInit() {
   }
-  gotoDetail(id: number) {
-    this.detailEvent.emit(id);
+
+  toDetail(pid: number) {
+    console.log(pid);
+    this.detailEvent.emit(pid);
   }
 }

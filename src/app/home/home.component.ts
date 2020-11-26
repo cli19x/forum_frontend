@@ -1,33 +1,35 @@
-import {User} from '../_models/user';
 import {UserService} from '../_services';
 import {AuthService} from '../_services';
 import {NotificationService} from '../_services';
-import {Post} from '../_models/post';
+import {TopicDetail} from '../_models/topicDetail';
 import {first} from 'rxjs/operators';
-import {PostService} from '../_services/post.service';
+import {EventService} from '../_services/event.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Index} from '../_models';
+import {Topic} from '../_models/topic';
+import {UserInfo} from '../_models/userInfo';
+import {ResponseObject} from '../_models/responseObject';
+import { formatDate } from '@angular/common';
 
 @Component({
   templateUrl: 'home.component.html',
-
   styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('slideshow', {static: true}) slideshow: any;
+  @ViewChild('slideshow', {static: true}) sideshow: any;
   postForm: FormGroup;
-  currentUser: User;
-  indexes: Index[] = [];
-  displayingIndexes: Index[] = [];
+  currentUser: UserInfo;
+  indexes: Topic[] = [];
+  filteredIndexes: Topic[] = [];
+  displayingIndexes: Topic[] = [];
   count = 0;
   currentItemPerPage = 20;
   currentPageIndex = 0;
   numberOfPages: number[] = [10, 20, 30, 50];
   moving = false;
-  imgSrc = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_up_hover.png';
-  imgSrc2 = 'https://angularcli.s3.amazonaws.com/asserts/img/ic_down_hover.png';
+  imgSrc = 'https://group-raiser-angular.s3.amazonaws.com/assets/ic_up_arrow.png';
+  imgSrc2 = 'https://group-raiser-angular.s3.amazonaws.com/assets/ic_down_arrow.png';
   currentImageIndex = -1;
   isInvalid = false;
   errorMessage = '';
@@ -37,50 +39,82 @@ export class HomeComponent implements OnInit {
   submitted = false;
   loading = false;
 
+  filterStartTime = '00:00';
+  filterEndTime = '23:59';
+  week = '1,2,3,4,5,6,7';
+  MondayToggle = true;
+  TuesdayToggle = true;
+  WednesdayToggle = true;
+  ThursdayToggle = true;
+  FridayToggle = true;
+  SaturdayToggle = true;
+  SundayToggle = true;
+  tomorrow: any;
+  minDate: any;
+  minTime: any;
+
   constructor(
-    private postService: PostService,
+    private postService: EventService,
     private userService: UserService,
     private authService: AuthService,
-    private notifService: NotificationService,
+    private notifyService: NotificationService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-
-    // Observing currentUser. We will need it to get user's id.
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
-
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.tomorrow = new Date(Date.now());
+    this.tomorrow.setDate(new Date().getDate() + 1);
+    this.minDate = formatDate(this.tomorrow, 'yyyy-MM-dd', 'en');
+    this.minTime = formatDate(this.tomorrow, 'HH:mm', 'en');
     this.postForm = this.formBuilder.group({
       title: ['', Validators.required],
-      content: ['', Validators.required]
+      content: ['', Validators.required],
+      date: [formatDate(this.tomorrow, 'yyyy-MM-dd', 'en'), Validators.required],
+      time: [formatDate(this.tomorrow, 'HH:mm', 'en'), Validators.required]
     });
-    this.imageSources = ['https://angularcli.s3.amazonaws.com/asserts/img/test1.jpg',
-      'https://angularcli.s3.amazonaws.com/asserts/img/test2.jpg',
-      'https://angularcli.s3.amazonaws.com/asserts/img/test3.jpg'];
-    this.linkSources = ['https://na.leagueoflegends.com/en/', 'http://blog.dota2.com/?l=english', 'https://www.pokemongo.com/en-us/'];
+    this.imageSources = ['https://group-raiser-angular.s3.amazonaws.com/assets/test1.jpg',
+      'https://group-raiser-angular.s3.amazonaws.com/assets/test2.jpg',
+      'https://group-raiser-angular.s3.amazonaws.com/assets/test3.jpg'];
+    this.linkSources = ['https://na.leagueoflegends.com/en/',
+      'http://blog.dota2.com/?l=english',
+      'https://www.pokemongo.com/en-us/'];
     this.getAllIndexes();
+    if (localStorage.getItem('Monday') != null) {
+      this.MondayToggle = localStorage.getItem('Monday') === 'true';
+      this.TuesdayToggle = localStorage.getItem('Tuesday') === 'true';
+      this.WednesdayToggle = localStorage.getItem('Wednesday') === 'true';
+      this.ThursdayToggle = localStorage.getItem('Thursday') === 'true';
+      this.FridayToggle = localStorage.getItem('Friday') === 'true';
+      this.SaturdayToggle = localStorage.getItem('Saturday') === 'true';
+      this.SundayToggle = localStorage.getItem('Sunday') === 'true';
+      this.filterStartTime = localStorage.getItem('StartTime').toString();
+      this.filterEndTime = localStorage.getItem('EndTime').toString();
+      console.log(localStorage.getItem('StartTime').toString());
+    }
   }
 
   getAllIndexes() {
-    this.postService.getIndexes().subscribe(
-      indexes => {
-        console.log(indexes);
-        const {errMsg, msg, objects} = indexes;
-        if (errMsg) {
-          this.notifService.showNotif(`Load topics error: ${errMsg}`, 'error');
-        } else if (msg) {
-          console.log(msg);
-          console.log(objects);
-          this.indexes = objects;
-          console.log(this.indexes);
-          this.count = this.indexes.length;
+    this.postService.getTopics().subscribe(
+      topics => {
+        const responseObject: ResponseObject = topics;
+        if (responseObject.errMsg) {
+          this.notifyService.showNotif(`Load topics error: ${responseObject.errMsg}`, 'error');
+        } else if (responseObject.msg) {
+          this.indexes = responseObject.objects as Topic[];
+          this.filteredIndexes = this.indexes;
+          this.filterStart();
+          this.count = this.filteredIndexes.length;
           this.onDefaultDisplaying();
+          this.notifyService.showNotif(responseObject.msg, 'confirm');
+        } else {
+          this.notifyService.showNotif(`Load topics error: ${responseObject.errMsg}`, 'error');
         }
       },
       error => {
-        this.notifService.showNotif(`Load topics error: ${error}`, 'error');
+        this.notifyService.showNotif(`Load topics error: ${error}`, 'error');
       });
   }
 
@@ -92,7 +126,7 @@ export class HomeComponent implements OnInit {
     this.isInvalid = false;
     this.submitted = true;
     if (this.postForm.invalid) {
-      this.errorMessage = 'Both filed must not be Empty';
+      this.errorMessage = 'Fields must not be Empty';
       this.isInvalid = true;
       return;
     } else {
@@ -104,48 +138,100 @@ export class HomeComponent implements OnInit {
         this.errorMessage = 'Invalid input in Main Content';
         this.isInvalid = true;
         return;
+      } else if (!this.f.date.value.replace(/\s/g, '').length) {
+        this.errorMessage = 'Invalid input in Date';
+        this.isInvalid = true;
+        return;
+      } else if (!this.f.time.value.replace(/\s/g, '').length) {
+        this.errorMessage = 'Invalid input in Time';
+        this.isInvalid = true;
+        return;
       }
     }
-
     this.loading = true;
-    const post: Post = {
-      token: this.currentUser.token,
+    const post: TopicDetail = {
+      pid: 0,
+      uid: this.currentUser.uid,
+      mid: -1,
+      createTime: undefined,
+      nickname: this.currentUser.nickname,
       postTitle: this.f.title.value,
       postData: this.f.content.value,
-      createTime: undefined,
-      postId: -1,
       commentCount: 0,
-      id: undefined,
-      level: undefined,
-      nickName: undefined,
-      motherPostId: undefined,
-      userId: undefined
+      dealDate: new Date(`${this.f.date.value}T${this.f.time.value}`).toISOString(),
+      week: 0,
+      levelCount: undefined,
+      commentDetailList: undefined
     };
     this.count++;
     console.log(post);
-    this.postService.submitPost(post)
+    this.postService.postTopicOrPost(post)
       .pipe(first())
       .subscribe(newPost => {
-          console.log('response', newPost);
-          const {msg, errMsg} = newPost;
-          if (errMsg) {
-            console.log('Post failed');
-            this.notifService.showNotif(`Post error: ${errMsg}`, 'confirm');
+          const responseObject: ResponseObject = newPost;
+          if (responseObject.errMsg) {
+            this.notifyService.showNotif(`Post error: ${responseObject.errMsg}`, 'error');
             this.loading = false;
-          } else if (msg) {
-            console.log(msg);
+            this.logout();
+          } else if (responseObject.msg) {
             this.getAllIndexes();
-            this.notifService.showNotif('Post success', 'confirm');
+            this.notifyService.showNotif(responseObject.msg, 'confirm');
             this.loading = false;
             window.scrollTo(0, 0);
             this.postForm.reset();
           }
         },
         error => {
-          this.notifService.showNotif(`Post error: ${error}`, 'error');
+          this.notifyService.showNotif(`Post error: ${error}`, 'error');
           this.loading = false;
         }
       );
+  }
+
+  filterStart() {
+    this.week = '';
+    this.week += this.MondayToggle ? '1,' : '';
+    this.week += this.TuesdayToggle ? '2,' : '';
+    this.week += this.WednesdayToggle ? '3,' : '';
+    this.week += this.ThursdayToggle ? '4,' : '';
+    this.week += this.FridayToggle ? '5,' : '';
+    this.week += this.SaturdayToggle ? '6,' : '';
+    this.week += this.SundayToggle ? '7,' : '';
+    if (this.week === '') {
+      this.notifyService.showNotif('Select at least one day of the week', 'error');
+      return;
+    }
+    if (this.filterStartTime >= this.filterEndTime) {
+      this.notifyService.showNotif('Invalid time interval input', 'error');
+      return;
+    }
+    localStorage.removeItem('Monday');
+    localStorage.removeItem('Tuesday');
+    localStorage.removeItem('Wednesday');
+    localStorage.removeItem('Thursday');
+    localStorage.removeItem('Friday');
+    localStorage.removeItem('Saturday');
+    localStorage.removeItem('Sunday');
+    localStorage.removeItem('StartTime');
+    localStorage.removeItem('EndTime');
+    localStorage.setItem('Monday', String(this.MondayToggle));
+    localStorage.setItem('Tuesday', String(this.TuesdayToggle));
+    localStorage.setItem('Wednesday', String(this.WednesdayToggle));
+    localStorage.setItem('Thursday', String(this.ThursdayToggle));
+    localStorage.setItem('Friday', String(this.FridayToggle));
+    localStorage.setItem('Saturday', String(this.SaturdayToggle));
+    localStorage.setItem('Sunday', String(this.SundayToggle));
+    localStorage.setItem('StartTime', this.filterStartTime);
+    localStorage.setItem('EndTime', this.filterEndTime);
+
+    this.filteredIndexes = this.indexes.filter(e =>
+      new Date(e.dealDate).toLocaleString('it-IT',
+        {hour: '2-digit', minute: '2-digit'}) > this.filterStartTime
+    && new Date(e.dealDate).toLocaleString('it-IT',
+      {hour: '2-digit', minute: '2-digit'}) < this.filterEndTime
+    && this.week.split(',').includes(new Date(e.dealDate).getDay() + ''));
+
+    this.onDefaultDisplaying();
   }
 
   onActivateUp() {
@@ -188,7 +274,9 @@ export class HomeComponent implements OnInit {
   }
 
   profile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile']).then(res => {
+      console.log(res);
+    });
   }
 
   gotoAdsLink($event) {
@@ -213,27 +301,37 @@ export class HomeComponent implements OnInit {
     this.currentPageIndex = $event.pageIndex;
     const startIndex = this.currentPageIndex * this.currentItemPerPage;
     const endIndex = (this.currentItemPerPage) * this.currentPageIndex + this.currentItemPerPage;
-    if (endIndex <= this.indexes.length) {
-      this.displayingIndexes = this.indexes.slice(startIndex, endIndex);
+    if (endIndex <= this.filteredIndexes.length) {
+      this.displayingIndexes = this.filteredIndexes.slice(startIndex, endIndex);
     } else {
-      this.displayingIndexes = this.indexes.slice(startIndex);
+      this.displayingIndexes = this.filteredIndexes.slice(startIndex);
     }
   }
 
   onDefaultDisplaying() {
-    if (this.currentItemPerPage <= this.indexes.length) {
-      this.displayingIndexes = this.indexes.slice(0, this.currentItemPerPage);
+    if (this.currentItemPerPage <= this.filteredIndexes.length) {
+      this.displayingIndexes = this.filteredIndexes.slice(0, this.currentItemPerPage);
     } else {
-      this.displayingIndexes = this.indexes.slice(0);
+      this.displayingIndexes = this.filteredIndexes.slice(0);
     }
   }
 
   charCountTitle() {
-    return this.f.title.value.toString().length;
+    if (this.f.title.value) {
+      return this.f.title.value.toString().length;
+    }
   }
 
-  onShowDetail(data: Index) {
-    this.router.navigate(['/topic', {id: data.id}]).then(res => {
+  detailPage(info: any) {
+    const {ID} = info;
+    this.router.navigate(['/topic', {mid: ID}]).then(res => {
+      console.log(res);
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']).then(res => {
       console.log(res);
     });
   }

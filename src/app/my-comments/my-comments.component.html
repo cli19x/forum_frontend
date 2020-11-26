@@ -1,5 +1,17 @@
 <div>
-  <a mat-flat-button disableRipple="true" (click)="toDetail(myComment.id)" class="nick_name"> {{myComment.nickName}}:</a> <br>
-  <a class="data" disabled="true">{{myComment.postData}}</a> <br>
-<a class="time"> - {{myComment.createTime | date: 'MM/dd/yyyy, h:mm a'}}</a> <br><br>
+  <a
+     mat-flat-button [disableRipple]="true" (click)="toDetail(myComment.mid, myComment.pid)" class="title">
+     {{myComment.postTitle}}</a>
+  <a *ngIf="myComment.targetNickname === ''"
+    mat-flat-button [disableRipple]="true"
+     class="nick_name_d">
+    {{myComment.targetNickname === '' ? '(own)' :'('+myComment.targetNickname+')'}}</a>
+
+  <a *ngIf="myComment.targetNickname !== ''"
+     mat-flat-button [disableRipple]="true" (click)="toUser(myComment.targetUid)" class="nick_name">
+    {{myComment.targetNickname === '' ? '(own)' :'('+myComment.targetNickname+')'}}</a>
+  <br>
+
+  <a  class="data">{{myComment.comment}}</a>
+  <a  class="time"> - {{myComment.commentTime}}</a> <br> <br>
 </div>

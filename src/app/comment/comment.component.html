@@ -1,6 +1,13 @@
-<div style="width: 100%; height: auto; border-top: 1px solid #DFDFDF;border-bottom: 1px solid #DFDFDF;padding:10px">
-  <a style="width: 100%; margin-top:8px">the teh sdkadjasl sdsadk sdsdsa ksdasd ksdsada dsajdksaj djsakdldjsakd
-    dsjakdjaslkdi tjksdslkadj</a> <br>
-  <a style="color: #FAAC27; width: 30%; margin-bottom:8px"> test nick name</a> &nbsp; <a
-  style="color: #888888; margin-bottom:8px">Feb 18 '13 at 15:52</a>
+<div class="main-div">
+  <p class="comment">{{comment.comment}}</p>
+  <a  mat-flat-button [disableRipple]="true" [disabled]="true" style=" background-color: transparent;
+    color: #333333;   padding: 0; text-align: right; width: 5px !important; margin-left: -50px;
+    margin-right: 1%; font-size: 12px;"> - </a>
+    <a  mat-flat-button [disableRipple]="true" class="nick-name"
+        (click)="seeOthers()">{{comment.nickname}}</a>
+
+  &nbsp;
+  <a class="create-time">{{comment.commentTime}}</a> &nbsp;
+  <a *ngIf ="isSelf() && comment.cid != -1" class="del" mat-flat-button [disableRipple]="true"
+     (click)="onCommentDelete(comment.cid)">delete</a>
 </div>

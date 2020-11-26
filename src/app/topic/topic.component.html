@@ -1,54 +1,63 @@
+<div style="display: inline; width: 100%;
+  min-width: 800px; overflow: hidden">
 
-<div style="display: inline;">
-
-<div style="width: 100%; height: 250px; display: flex; border-top: #DFDFDF solid 1px;">
-  <div
-    style="min-width: 150px; min-height: 250px;  width: 15%; background-color: #F9F9F9;  border-right: #DFDFDF solid 1px; display: flex">
-    <div>
-      <img style=" width: 100px; height: 100px; margin-top: 22px; margin-left: 23px; float: left"
-           src="https://angularcli.s3.amazonaws.com/asserts/img/back.jpg">
-      <a class="username">{{topic.nickName}}</a>
+  <div style="width: 100%; height: 250px; display: flex; border-top: #DFDFDF solid 1px; min-width: 800px">
+    <div
+      style="min-width: 150px; min-height: 250px;  width: 15%; background-color: #F9F9F9;
+      border-right: #DFDFDF solid 1px; display: flex">
+      <div>
+        <img class="dp" *ngIf="userAvatar"
+             [src]="userAvatar" alt="">
+        <a mat-flat-button [disableRipple]="true" class="username" (click)="seeOthers()">{{topic.nickname}}</a>
+      </div>
     </div>
-  </div>
 
-  <div
-    style="min-width: 300px; height: auto; width: 85%; display: block; background-color: white;
+    <div
+      style="min-width: 600px; height: auto; width: 85%; display: block; background-color: white;
      align-content: center;  border-left: #DFDFDF solid 1px; float: left">
-      <a class="data">{{topic.postData}}</a>
+      <a *ngIf="topic.mid === -1" class="data">
+        <a style="color: darkblue;">{{"(Meet time: " + dealDateString + ')'}}</a> <br><br> {{topic.postData}}</a>
+      <a *ngIf="topic.mid != -1" class="data">{{topic.postData}}</a>
       <div
         style="text-align: right; width: 95%; height: 20%; margin-right: 10px;
         display: inline-block">
-        <a class="time" matTooltip="create time">{{topic.createTime | date: 'MM/dd/yyyy, h:mm a'}}</a>
-        <a *ngIf="isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link" (click)="toggle()">
-          reply{{topic.commentCount > 0 ? '('+topic.commentCount+')' : ''}}</a>
-        <a *ngIf="!isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link" (click)="toggle()">
+        <a class="time" matTooltip="create time">{{topic.createTime}}</a>
+        <a *ngIf="isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link"
+           (click)="toggle()">
+          comment{{topic.commentCount > 0 ? '(' + topic.commentCount + ')' : ''}}</a>
+        <a *ngIf="!isHidden" mat-flat-button disableRipple="true" class="reply" matTooltip="Clickable link"
+           (click)="toggle()">
           collapse</a>
-        <a *ngIf="isSelf()" mat-flat-button class="del" (click)="deletePost(topic.id, topic.level)">delete</a>
+        <a *ngIf="isSelf()" mat-flat-button  [disableRipple]="true" class="del"
+           (click)="deletePost(topic.pid, topic.mid)">delete</a>
       </div>
     </div>
-    <!--  </div>-->
-    <!--      <div *ngIf="!isHidden" class="content">-->
 
-    <!--        <div>-->
-    <!--          <label>-->
-    <!--          <textarea  #postContent class="commentBox" maxlength="300"-->
-    <!--                     placeholder="Say something here" required="true">-->
-    <!--        </textarea>-->
-    <!--          </label>-->
-    <!--          <button mat-button  class = "btn_post" (click)="onPost(postContent.value)">Post</button>-->
-    <!--        </div>-->
-    <!--        <div>-->
-    <!--    </div>-->
-</div>
-  <div *ngIf="isHidden" style="width: 100%; height: 1px; background-color: #DFDFDF"></div>
+  </div>
+  <div *ngIf="isHidden" class="expanded-div">
+  </div>
+
   <div *ngIf="!isHidden"
-       style="width: 100%; height: auto; display: flex;">
+       style="width: 100%; height: auto; display: flex; border-bottom: 1px solid #DFDFDF;">
     <div
-      style="min-width: 150px;  height: auto;  width: 15%; background-color: #F9F9F9;  border-right: #DFDFDF solid 1.5px; display: flex">
+      style="min-width: 150px;  height: auto;  width: 15%; background-color: #F9F9F9;
+      border-right: #DFDFDF solid 1.5px; display: flex">
     </div>
-    <div style="margin-bottom: 10px; width: 85%; display: flex">
-       <div style="margin-top: 7px; margin-left: 5%; background-color: #DCDCDF; height: 200px; width: 95%">
-       </div>
+    <div style="display: block; width: 100%; height: auto; min-width: 600px; border-top: 1px solid #DFDFDF;">
+      <app-comment *ngFor="let comment of comment_list" [comment]="comment" style="width: 100%;"
+      (deleteComment)="onDeleteComment($event)">
+      </app-comment>
+      <div style="width: 100%; display: inline; border-top: 1px solid #DFDFDF;">
+        <span style="width: 10%; height: auto; float: left"></span>
+        <label>
+        <textarea  class="commentBox" maxlength="100" [(ngModel)]="commentText"
+                  placeholder="Say something here" required="true">
+        </textarea>
+        </label>
+        <button mat-button class="btn_comment"
+                (click)="onPost()">Post
+        </button>
+      </div>
     </div>
   </div>
 </div>

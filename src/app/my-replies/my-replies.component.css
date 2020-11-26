@@ -1,0 +1,105 @@
+a{
+  color: #494949;
+}
+
+.main-div {
+  width: 99.7%;
+  height: 100px;
+  border: 1px solid #DFDFDF;
+  background-color: white
+}
+
+
+.div-1 {
+  float: left;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.title {
+  margin-left: 5px;
+  text-align: left;
+  margin-top: 15px;
+  float: left;
+  color: #2A7DFA;
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 60%
+}
+
+.title:hover {
+  margin-left: 5px;
+  margin-top: 15px;
+  float: left;
+  color: #2A7DFA;
+  font-size: 18px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  width: 60%
+}
+
+.div-2 {
+  width: 28%;
+  margin-left: 12px;
+  float: left;
+}
+
+
+.data {
+  float: left;
+  color: #494949;
+  width: 90%;
+  height: 44%;
+  max-lines: 2;
+  text-align: left;
+  font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 18px;
+  margin-top: 15px;
+}
+
+.div-3 {
+  width: 100%;
+  float: left;
+  position: absolute;
+  bottom: 20px;
+}
+
+.div-4 {
+  width: 45%;
+  float: right;
+  padding-left: 1px;
+  font-size: 14px;
+  margin-right: 40px
+}
+
+.reply {
+  width: 10%;
+  padding-left: 1px;
+  margin-left: 15px;
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.reply-img {
+  width: 14px;
+  margin-top: 15px;
+  height: 14px;
+  margin-left: 3px;
+}
+
+.time {
+  width: 10%;
+  padding-left: 1px;
+  font-size: 12px;
+  margin-left: 20px;
+  margin-top: 15px;
+}

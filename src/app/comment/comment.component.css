@@ -1,0 +1,48 @@
+.main-div {
+  width: 100%;
+  height: auto;
+  text-align: left;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.comment {
+  width: 96%;
+  margin-left: 1%;
+  color: #494949;
+  font-size: 12px;
+}
+
+.nick-name {
+  color: #FAAC27;
+  width: auto;
+  text-align: left;
+  padding: 0;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.nick-name:hover {
+  color: #fccd7d;
+  width: auto;
+  font-size: 12px;
+}
+
+.create-time {
+  color: #888888;
+  width: auto;
+  margin-left: 1%;
+  font-size: 12px;
+}
+.del {
+  text-align: left;
+  color: #888888;
+  font-size: 12px;
+}
+
+.del:hover {
+  text-align: left;
+  color: #494949;
+  font-size: 12px;
+}
+
+

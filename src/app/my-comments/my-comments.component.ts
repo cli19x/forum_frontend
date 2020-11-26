@@ -1,24 +1,24 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MyComment} from '../_models/myComment';
-import {Post} from '../_models/post';
-
+import {CommentDetail} from '../_models/commentDetail';
 @Component({
   selector: 'app-my-comments',
   templateUrl: './my-comments.component.html',
   styleUrls: ['./my-comments.component.css']
 })
 export class MyCommentsComponent implements OnInit {
-  @Input() myComment: Post;
-  @Output() commentEvent = new EventEmitter<number>();
+  @Input() myComment: CommentDetail;
+  @Output() detailEvent = new EventEmitter<number>();
+  @Output() userEvent = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit() {
-    console.log(this.myComment);
   }
 
-  toDetail(id: number) {
-    console.log(id);
-    this.commentEvent.emit(id);
+  toDetail(mid: number, pid: number) {
+    mid === -1 ? this.detailEvent.emit(pid) : this.detailEvent.emit(mid);
   }
 
+  toUser(uid: string) {
+    this.userEvent.emit(uid);
+  }
 }

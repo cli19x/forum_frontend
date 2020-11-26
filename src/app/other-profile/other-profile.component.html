@@ -1,0 +1,46 @@
+<body>
+<div class='container'>
+  <div class='header'>
+    <img  class='background' *ngIf="otherBackground" [src]="otherBackground" alt=""/>
+    <div class='person'>
+      <img class='dp' *ngIf="otherAvatar" [src]="otherAvatar" alt="">
+    </div>
+    <div class='name' *ngIf="otherProfile">{{otherProfile.nickname}}</div>
+  </div>
+  <div class='info'>
+    <h2 class="title">Personal Status
+    </h2>
+    <div>
+      <p *ngIf="otherProfile">{{otherProfile.signature}}</p>
+    </div>
+    <mat-tab-group style="margin-top: 10px; display: inline-block;
+          float: left; width: 96%; margin-left: 2%; margin-right: 2%; min-width: 800px">
+      <mat-tab label="Posted By me">
+        <div class="main_div2">
+          <div class="post-div">
+            <div class="list-container">
+              <my-topic-app *ngFor="let item of displayingPostIndexes" [myTopic]="item"
+                            (detailEvent)="gotoTopic($event)">
+
+              </my-topic-app>
+              <mat-paginator style="width: 100%;"
+                             [length]="countPost"
+                             [pageSize]="currentPostItemPerPage"
+                             [pageSizeOptions]="numberOfPages"
+                             (page)="onPostPaginateChanging($event)"
+                             [showFirstLastButtons]="true">
+              </mat-paginator>
+
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+</body>
+
+
+
+

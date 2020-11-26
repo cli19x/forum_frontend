@@ -1,11 +1,14 @@
-import {User} from './user';
-import {Data} from '@angular/router';
+import DateTimeFormat = Intl.DateTimeFormat;
+import {Timestamp} from 'rxjs';
+import {Time} from '@angular/common';
 
 export class Topic {
-  replies: number;
+  pid: number;
+  uid: string;
   postTitle: string;
-  id: string;
-  mainPost: string;
-  postedBy?: User;
-  date: Data;
+  postData: string;
+  nickname: string;
+  createTime: string;
+  dealDate: string;
+  levelCount: string;
 }

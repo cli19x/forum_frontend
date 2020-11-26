@@ -1,0 +1,154 @@
+
+body{
+  font-family: Tahoma, Geneva, sans-serif;
+  color: transparent;
+  background: #F9F9F9;
+  min-height: auto;
+  background-size: cover;
+}
+.container {
+  width:62%;
+  min-height: 300px;
+  margin-left: 19%;
+  min-width: 800px;
+  background: white;
+  border: 1px solid #DFDFDF;
+  overflow:hidden;
+}
+.header {
+  width:100%;
+  height:300px;
+  position:relative;
+  background:#fff;
+}
+.background{
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:-56px;
+  object-fit: cover;
+  transform:skewY(-6deg);
+}
+
+.person {
+  width:250px;
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+.dp {
+  width:130px;
+  height:130px;
+  object-fit: cover;
+  background-size:cover;
+  background: #fff center;
+  box-shadow:1px 2px 8px 2px rgba(0, 0, 0, 0.5);
+  border:3px solid #fff;
+  position:absolute;
+  bottom:45px;
+  right:80px;
+  border-radius:50%;
+}
+.name {
+  color:#25272b;
+  position:absolute;
+  bottom:5px;
+  right:12%;
+  font-weight:bolder;
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+  text-shadow:1px 1px 1px #eee;
+  font-size:25px;
+}
+
+.info {
+  border-top:1px solid #eee;
+  background-color: white;
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+}
+.title {
+  color:#25272b;
+  margin-top: 25px;
+  margin-bottom:15px;
+  margin-left: 20px;
+  position:relative;
+  padding-bottom:3px;
+}
+.title:after {
+  position:absolute;
+  content:'';
+  bottom:0;
+  left:0;
+  border-bottom:1.5px solid #333;
+  width:200px;
+}
+
+.title-1 {
+  color:#25272b;
+  margin-top: 25px;
+  margin-bottom:15px;
+  margin-left: 20px;
+  position:relative;
+  padding-bottom:3px;
+}
+
+.movies {
+  width:100%;
+  padding-top:20px;
+  margin-top:20px;
+  border-top:1px solid #eee;
+}
+
+.section {
+  list-style-type:none;
+}
+.section li {
+  width:70px;
+  margin:5px;
+  display:inline-block;
+}
+.section li span {
+  display:block;
+  font-size:13px;
+  text-transform:capitalize;
+  height:30px;
+  overflow:hidden;
+}
+
+.social {
+  width:100%;
+  padding-top:40px;
+  margin-top:20px;
+  border-top:1px solid #eee;
+  padding-bottom:20px;
+  border-bottom:1px solid #eee;
+}
+.social ul li{
+  list-style:none;
+  display:inline;
+  margin:10px;
+}
+.social ul li a img {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.social ul li a img:hover {
+  opacity:0.5;
+}
+
+
+.sig {
+  font-size: 18px;
+  color:#333;
+  text-align: justify;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+p {
+  margin-left: 20px;
+  color: #494949;
+}

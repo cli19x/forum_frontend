@@ -1,11 +1,10 @@
 <div class="main-div">
   <div class="div-1">
-    <a mat-flat-button disableRipple="true" class="title" (click)="gotoDetail(myTopic.id)">{{myTopic.postTitle}}</a>
+    <a mat-flat-button disableRipple="true" class="title" (click)="toDetail(myTopic.pid)">{{myTopic.postTitle}}</a>
     <div class="div-2">
-      <a
-        class="reply">500</a>
-      <img class="reply-img"  src="https://angularcli.s3.amazonaws.com/asserts/img/ic_reply_i.png" matTooltip="reply number" alt=""/>
-      <a class="time" matTooltip="create time">{{myTopic.createTime | date: 'MM/dd/yyyy, h:mm a' }}</a>
+      <a class="reply">{{myTopic.commentCount}}</a>
+      <img class="reply-img"  src="https://group-raiser-angular.s3.amazonaws.com/assets/ic_reply.png" matTooltip="reply number" alt=""/>
+      <a class="time" matTooltip="create time">{{myTopic.createTime}}</a>
 
     </div>
     <p class="data">{{myTopic.postData}}</p>
